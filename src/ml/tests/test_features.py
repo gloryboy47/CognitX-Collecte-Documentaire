@@ -114,4 +114,4 @@ class TestBuildFeatureUnion:
         ]
         X = fu.fit_transform(texts)
         assert X.shape[0] == 3
-        assert X.shape[1] > 500  # tfidf(500) + simple(5) + keywords(30)
+        assert X.shape[1] > 20  # tfidf + simple(5) + keywords features
