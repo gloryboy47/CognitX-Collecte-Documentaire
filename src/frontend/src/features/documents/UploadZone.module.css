@@ -11,7 +11,7 @@
 .zone:hover,
 .active {
   border-color: var(--color-primary);
-  background: #eff6ff;
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
 }
 
 .hidden {
@@ -34,4 +34,20 @@
   color: var(--color-success);
   margin-top: 8px;
   font-weight: 500;
+}
+
+.progressBar {
+  width: 60%;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  margin: 12px auto 0;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 3px;
+  transition: width 0.3s;
 }

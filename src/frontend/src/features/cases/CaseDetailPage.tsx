@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
+import { TableSkeleton } from "@/shared/ui/Skeleton";
 import { UploadZone } from "@/features/documents/UploadZone";
 import styles from "./CaseDetail.module.css";
 
@@ -36,7 +37,7 @@ export function CaseDetailPage() {
     refetchInterval: 5000,
   });
 
-  if (isLoading) return <p className={styles.muted}>Chargement...</p>;
+  if (isLoading) return <TableSkeleton rows={5} />;
   if (!caseData) return <p className={styles.muted}>Dossier introuvable.</p>;
 
   const canUpload = user?.role === "client" || user?.role === "consultant";

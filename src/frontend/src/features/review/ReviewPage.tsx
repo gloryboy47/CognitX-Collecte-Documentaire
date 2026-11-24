@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
+import { useToast } from "@/shared/ui/Toast";
 import styles from "./Review.module.css";
 
 interface Prediction {
@@ -83,6 +84,7 @@ export function ReviewPage() {
   const { user } = useAuth();
   const qc = useQueryClient();
   const [comment, setComment] = useState("");
+  const { toast } = useToast();
 
   const { data: doc, isLoading } = useQuery<DocumentDetail>({
     queryKey: ["document", docId],
@@ -92,9 +94,13 @@ export function ReviewPage() {
   const decide = useMutation({
     mutationFn: (decision: string) =>
       api.post(`/documents/${docId}/decide`, { decision, comment }),
-    onSuccess: () => {
+    onSuccess: (_data, decision) => {
       qc.invalidateQueries({ queryKey: ["document", docId] });
       qc.invalidateQueries({ queryKey: ["case"] });
+      toast(
+        decision === "confirme" ? "Document confirme" : "Document rejete",
+        decision === "confirme" ? "success" : "info",
+      );
     },
   });
 

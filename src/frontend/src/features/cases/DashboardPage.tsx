@@ -4,6 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
+import { useToast } from "@/shared/ui/Toast";
+import { CardSkeleton } from "@/shared/ui/Skeleton";
 import { StatsPanel } from "@/features/stats/StatsPanel";
 import styles from "./Dashboard.module.css";
 
@@ -24,6 +26,7 @@ export function DashboardPage() {
   const [description, setDescription] = useState("");
   const [search, setSearch] = useState("");
   const [stateFilter, setStateFilter] = useState("all");
+  const { toast } = useToast();
 
   const { data: cases = [], isLoading } = useQuery<Case[]>({
     queryKey: ["cases"],
@@ -38,6 +41,7 @@ export function DashboardPage() {
       setShowForm(false);
       setName("");
       setDescription("");
+      toast("Dossier cree avec succes", "success");
     },
   });
 
@@ -103,7 +107,11 @@ export function DashboardPage() {
         </select>
       </div>
 
-      {isLoading && <p className={styles.muted}>Chargement...</p>}
+      {isLoading && (
+        <div className={styles.grid}>
+          {[1, 2, 3].map((i) => <CardSkeleton key={i} />)}
+        </div>
+      )}
 
       {!isLoading && cases.length === 0 && (
         <p className={styles.muted}>Aucun dossier pour le moment.</p>
