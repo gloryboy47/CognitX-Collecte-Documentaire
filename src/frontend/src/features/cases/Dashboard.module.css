@@ -137,6 +137,13 @@
   color: var(--color-text-muted);
 }
 
+.date {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+}
+
 .pagination {
   display: flex;
   align-items: center;

@@ -12,6 +12,13 @@ export function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const passwordStrength = (() => {
+    if (password.length === 0) return { label: "", color: "", width: "0%" };
+    if (password.length < 6) return { label: "Faible", color: "var(--color-danger)", width: "33%" };
+    if (password.length < 10 || !/[0-9]/.test(password)) return { label: "Moyen", color: "var(--color-warning)", width: "66%" };
+    return { label: "Fort", color: "var(--color-success)", width: "100%" };
+  })();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
@@ -62,6 +69,19 @@ export function RegisterPage() {
             required
             minLength={6}
           />
+          {password.length > 0 && (
+            <div className={styles.strengthWrap}>
+              <div className={styles.strengthBar}>
+                <div
+                  className={styles.strengthFill}
+                  style={{ width: passwordStrength.width, background: passwordStrength.color }}
+                />
+              </div>
+              <span className={styles.strengthLabel} style={{ color: passwordStrength.color }}>
+                {passwordStrength.label}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className={styles.field}>

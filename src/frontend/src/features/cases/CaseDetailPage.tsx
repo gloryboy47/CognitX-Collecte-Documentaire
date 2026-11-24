@@ -82,6 +82,22 @@ export function CaseDetailPage() {
         Documents ({caseData.documents.length})
       </h2>
 
+      {caseData.documents.length > 0 && (
+        <div className={styles.docStats}>
+          {(() => {
+            const counts: Record<string, number> = {};
+            for (const d of caseData.documents) {
+              counts[d.state] = (counts[d.state] || 0) + 1;
+            }
+            return Object.entries(counts).map(([state, count]) => (
+              <span key={state} className={styles.docStatBadge}>
+                <StatusBadge status={state} /> {count}
+              </span>
+            ));
+          })()}
+        </div>
+      )}
+
       {caseData.documents.length === 0 ? (
         <p className={styles.muted}>Aucun document depose.</p>
       ) : (

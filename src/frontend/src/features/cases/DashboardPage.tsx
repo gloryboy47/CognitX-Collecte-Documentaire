@@ -26,6 +26,7 @@ export function DashboardPage() {
   const [description, setDescription] = useState("");
   const [search, setSearch] = useState("");
   const [stateFilter, setStateFilter] = useState("all");
+  const [sortBy, setSortBy] = useState<"recent" | "name" | "state">("recent");
   const [page, setPage] = useState(0);
   const { toast } = useToast();
   const PAGE_SIZE = 9;
@@ -100,7 +101,7 @@ export function DashboardPage() {
         <select
           className={styles.filterSelect}
           value={stateFilter}
-          onChange={(e) => setStateFilter(e.target.value)}
+          onChange={(e) => { setStateFilter(e.target.value); setPage(0); }}
           aria-label="Filtrer par etat"
         >
           <option value="all">Tous les etats</option>
@@ -108,6 +109,16 @@ export function DashboardPage() {
           <option value="EN_COURS">En cours</option>
           <option value="A_VALIDER">A valider</option>
           <option value="VALIDE">Valide</option>
+        </select>
+        <select
+          className={styles.filterSelect}
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as "recent" | "name" | "state")}
+          aria-label="Trier par"
+        >
+          <option value="recent">Plus recents</option>
+          <option value="name">Nom (A-Z)</option>
+          <option value="state">Etat</option>
         </select>
       </div>
 
@@ -122,12 +133,18 @@ export function DashboardPage() {
       )}
 
       {(() => {
-        const filtered = cases.filter((c) => {
-          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
-            c.description.toLowerCase().includes(search.toLowerCase());
-          const matchState = stateFilter === "all" || c.state === stateFilter;
-          return matchSearch && matchState;
-        });
+        const filtered = cases
+          .filter((c) => {
+            const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
+              c.description.toLowerCase().includes(search.toLowerCase());
+            const matchState = stateFilter === "all" || c.state === stateFilter;
+            return matchSearch && matchState;
+          })
+          .sort((a, b) => {
+            if (sortBy === "name") return a.name.localeCompare(b.name);
+            if (sortBy === "state") return a.state.localeCompare(b.state);
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          });
         const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
         const paginated = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
@@ -144,6 +161,11 @@ export function DashboardPage() {
                   {c.description && (
                     <span className={styles.year}>{c.description}</span>
                   )}
+                  <span className={styles.date}>
+                    {new Date(c.created_at).toLocaleDateString("fr-FR", {
+                      day: "numeric", month: "short", year: "numeric",
+                    })}
+                  </span>
                 </Link>
               ))}
             </div>
