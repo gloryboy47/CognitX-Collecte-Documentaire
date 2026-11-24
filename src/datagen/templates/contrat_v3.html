@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 25mm 20mm; }
+  body { font-family: 'Courier New', monospace; font-size: 10pt; color: #000; line-height: 1.5; }
+  .titre-cadre { border: 3px double #000; text-align: center; padding: 15px; margin-bottom: 20px; }
+  .titre-cadre h1 { font-size: 14pt; margin: 0 0 5px; letter-spacing: 3px; text-transform: uppercase; }
+  .titre-cadre .sous { font-size: 9pt; color: #555; }
+  .titre-cadre .date { font-size: 9pt; margin-top: 8px; }
+  .parties { margin: 20px 0; }
+  .partie { margin: 10px 0; padding: 10px; border: 1px solid #000; }
+  .partie .label { font-weight: bold; text-decoration: underline; font-size: 9pt; display: block; margin-bottom: 5px; }
+  .entre-et { text-align: center; font-weight: bold; font-size: 11pt; margin: 8px 0; }
+  .preambule { margin: 20px 0; font-style: italic; text-align: justify; padding: 10px; background: #f5f5f5; border-left: 3px solid #000; }
+  .article { margin: 15px 0; }
+  .article h2 { font-size: 10pt; margin: 0 0 5px; text-decoration: underline; }
+  .article p { text-align: justify; margin: 5px 0; }
+  .signatures { display: flex; justify-content: space-between; margin-top: 50px; }
+  .sig-zone { width: 42%; text-align: center; }
+  .sig-zone .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; }
+  .sig-zone .cadre { border: 1px solid #000; height: 60px; margin: 10px 0; }
+  .sig-zone .nom { font-weight: bold; }
+  .pied { font-size: 7pt; color: #888; text-align: center; margin-top: 30px; border-top: 2px solid #000; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="titre-cadre">
+  <h1>{{ titre_document }}</h1>
+  <div class="sous">{{ sous_titre }}</div>
+  <div class="date">Fait a {{ lieu }}, le {{ date_contrat }}</div>
+</div>
+
+<div class="parties">
+  <div class="partie">
+    <span class="label">PARTIE 1 : {{ denomination_a }}</span>
+    {{ partie_a.name }}, SIREN {{ partie_a.siren }}<br>
+    Siege : {{ partie_a.address }}, {{ partie_a.zip_code }} {{ partie_a.city }}<br>
+    Representee par {{ representant_a }} ({{ qualite_a }})
+  </div>
+  <div class="entre-et">— ET —</div>
+  <div class="partie">
+    <span class="label">PARTIE 2 : {{ denomination_b }}</span>
+    {{ partie_b_nom }}<br>
+    {% if partie_b_siren %}SIREN {{ partie_b_siren }} | {% endif %}{{ partie_b_adresse }}<br>
+    {% if representant_b %}Representee par {{ representant_b }}{% endif %}
+  </div>
+</div>
+
+<div class="preambule">
+  Les parties conviennent de ce qui suit, apres avoir expose leur intention de collaborer dans un cadre contractuel defini par les articles ci-dessous.
+</div>
+
+{% for article in articles %}
+<div class="article">
+  <h2>ARTICLE {{ article.numero }} — {{ article.titre|upper }}</h2>
+  <p>{{ article.contenu }}</p>
+</div>
+{% endfor %}
+
+<div class="signatures">
+  <div class="sig-zone">
+    <div class="label">{{ denomination_a }}</div>
+    <div class="cadre"></div>
+    <div class="nom">{{ representant_a }}</div>
+  </div>
+  <div class="sig-zone">
+    <div class="label">{{ denomination_b }}</div>
+    <div class="cadre"></div>
+    <div class="nom">{% if representant_b %}{{ representant_b }}{% else %}{{ partie_b_nom }}{% endif %}</div>
+  </div>
+</div>
+
+<div class="pied">
+  Fait en deux exemplaires originaux — Chaque partie reconnait avoir recu le sien.
+</div>
+
+</body>
+</html>

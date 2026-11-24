@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docintel-ml"
+version = "0.1.0"
+description = "Classification de documents justificatifs : données, entraînement, évaluation, inférence"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "scipy>=1.13",
+    "joblib>=1.4",
+    "pyyaml>=6.0",
+    "matplotlib>=3.9",
+]
+
+[project.optional-dependencies]
+# Uniquement si la baseline linéaire plafonne et que l'équipe sait l'expliquer
+xgboost = ["xgboost>=2.1"]
+notebooks = ["jupyterlab>=4"]
+dev = ["pytest>=8", "pytest-cov", "ruff"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

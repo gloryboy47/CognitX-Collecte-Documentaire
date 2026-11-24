@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 18mm; }
+  body { font-family: 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; color: #333; line-height: 1.5; }
+  .bandeau { background: {{ emetteur.logo_color }}; color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+  .bandeau h1 { margin: 0; font-size: 20pt; }
+  .bandeau .num { font-size: 11pt; opacity: 0.9; }
+  .parties { display: flex; justify-content: space-between; margin: 25px 0; }
+  .partie { width: 45%; }
+  .partie h3 { margin: 0 0 5px; font-size: 10pt; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+  .info-box { background: #f5f5f5; padding: 12px; border-left: 3px solid {{ emetteur.logo_color }}; font-size: 9.5pt; }
+  .details { display: flex; gap: 30px; margin: 15px 0; font-size: 9.5pt; }
+  .details .item { }
+  .details .label { color: #888; font-size: 8.5pt; text-transform: uppercase; }
+  table.prestations { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  table.prestations th { background: #f0f0f0; padding: 8px; text-align: left; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid {{ emetteur.logo_color }}; }
+  table.prestations td { padding: 8px; border-bottom: 1px solid #eee; font-size: 10pt; }
+  .recap { display: flex; justify-content: flex-end; margin-top: 15px; }
+  .recap table td { padding: 5px 15px; font-size: 10pt; }
+  .recap .final { font-size: 13pt; font-weight: bold; color: {{ emetteur.logo_color }}; border-top: 2px solid #333; }
+  .pied { margin-top: 30px; padding-top: 10px; border-top: 1px solid #ccc; font-size: 8pt; color: #999; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="bandeau">
+  <h1>{{ titre_document }}</h1>
+  <div class="num">N° {{ numero }}</div>
+</div>
+
+<div class="parties">
+  <div class="partie">
+    <h3>Emetteur</h3>
+    <div class="info-box">
+      <strong>{{ emetteur.name }}</strong><br>
+      {{ emetteur.address }}<br>
+      {{ emetteur.zip_code }} {{ emetteur.city }}<br>
+      SIREN : {{ emetteur.siren }}
+    </div>
+  </div>
+  <div class="partie">
+    <h3>Destinataire</h3>
+    <div class="info-box">
+      <strong>{{ destinataire.name }}</strong><br>
+      {{ destinataire.address }}<br>
+      {{ destinataire.zip_code }} {{ destinataire.city }}
+    </div>
+  </div>
+</div>
+
+<div class="details">
+  <div class="item"><div class="label">Date d'emission</div>{{ date_emission }}</div>
+  <div class="item"><div class="label">Echeance</div>{{ date_echeance }}</div>
+  {% if reference_commande %}<div class="item"><div class="label">Ref. commande</div>{{ reference_commande }}</div>{% endif %}
+</div>
+
+<table class="prestations">
+  <thead>
+    <tr><th>Prestation</th><th>Qte</th><th>P.U. HT</th><th>Total HT</th></tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+    <tr>
+      <td>{{ ligne.designation }}</td>
+      <td>{{ ligne.quantite }}</td>
+      <td>{{ ligne.prix_unitaire }} EUR</td>
+      <td>{{ ligne.montant_ht }} EUR</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="recap">
+  <table>
+    <tr><td>Sous-total HT</td><td>{{ total_ht }} EUR</td></tr>
+    <tr><td>TVA {{ taux_tva }} %</td><td>{{ montant_tva }} EUR</td></tr>
+    <tr><td class="final">NET A PAYER</td><td class="final">{{ total_ttc }} EUR</td></tr>
+  </table>
+</div>
+
+<p style="font-size:9pt; color:#666; margin-top:20px;">{{ mentions_legales }}</p>
+
+<div class="pied">
+  {{ emetteur.name }} | SIREN {{ emetteur.siren }} | TVA {{ emetteur.tva }} | IBAN {{ emetteur.iban }} | {{ emetteur.email }}
+</div>
+
+</body>
+</html>

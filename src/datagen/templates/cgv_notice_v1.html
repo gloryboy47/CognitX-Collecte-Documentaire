@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Times New Roman', serif; font-size: 10pt; color: #333; line-height: 1.5; }
+  h1 { text-align: center; font-size: 14pt; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+  .date-maj { text-align: center; font-size: 9pt; color: #888; margin-bottom: 25px; }
+  h2 { font-size: 11pt; margin: 18px 0 6px; }
+  h2 .num { color: #555; }
+  p { text-align: justify; margin: 5px 0 10px; }
+  .pied { margin-top: 40px; font-size: 7.5pt; color: #aaa; text-align: center; border-top: 1px solid #ddd; padding-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>{{ titre_document }}</h1>
+<div class="date-maj">Derniere mise a jour : {{ date_maj }}</div>
+
+{% for article in articles %}
+<h2><span class="num">Article {{ article.numero }}</span> — {{ article.titre }}</h2>
+<p>{{ article.contenu }}</p>
+{% endfor %}
+
+<div class="pied">
+  {{ entreprise }} — Document non contractuel a titre informatif
+</div>
+
+</body>
+</html>

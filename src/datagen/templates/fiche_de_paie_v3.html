@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 15mm; }
+  body { font-family: 'Courier New', monospace; font-size: 8.5pt; color: #000; line-height: 1.3; }
+  .entete { border: 2px solid #000; padding: 10px; margin-bottom: 10px; }
+  .entete-grid { display: flex; justify-content: space-between; }
+  .entete-left { width: 55%; }
+  .entete-right { width: 40%; text-align: right; font-size: 8pt; }
+  h1 { text-align: center; font-size: 12pt; text-transform: uppercase; letter-spacing: 4px; border-top: 3px solid #000; border-bottom: 3px solid #000; padding: 6px 0; margin: 10px 0; }
+  .bloc-info { display: flex; gap: 10px; margin: 8px 0; }
+  .bloc-info > div { flex: 1; border: 1px solid #000; padding: 6px 8px; font-size: 8pt; }
+  .bloc-info .titre { font-weight: bold; text-decoration: underline; margin-bottom: 4px; display: block; }
+  table.grille { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 7.5pt; }
+  table.grille th, table.grille td { border: 1px solid #000; padding: 3px 5px; }
+  table.grille th { background: #ddd; text-align: center; font-size: 7pt; text-transform: uppercase; }
+  table.grille td.montant { text-align: right; font-family: 'Courier New', monospace; }
+  table.grille tr.separateur td { background: #eee; font-weight: bold; font-size: 8pt; }
+  .cadre-net { border: 3px solid #000; padding: 10px; margin: 12px 0; text-align: center; }
+  .cadre-net .titre-net { font-size: 8pt; text-transform: uppercase; letter-spacing: 2px; }
+  .cadre-net .valeur-net { font-size: 18pt; font-weight: bold; margin: 5px 0; }
+  .cadre-net .info-paiement { font-size: 7.5pt; color: #555; }
+  .bas-bulletin { display: flex; gap: 15px; margin-top: 10px; font-size: 7.5pt; }
+  .bas-bulletin > div { flex: 1; }
+  .bas-bulletin table { width: 100%; }
+  .bas-bulletin td { padding: 2px 4px; border-bottom: 1px dotted #999; }
+  .mentions { margin-top: 15px; font-size: 6.5pt; color: #777; border-top: 2px solid #000; padding-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="entete">
+  <div class="entete-grid">
+    <div class="entete-left">
+      <strong style="font-size:11pt;">{{ employeur.name }}</strong><br>
+      {{ employeur.address }}<br>
+      {{ employeur.zip_code }} {{ employeur.city }}<br>
+      SIREN : {{ employeur.siren }}
+    </div>
+    <div class="entete-right">
+      Bulletin n° {{ numero_bulletin }}<br>
+      Convention : {{ convention }}<br>
+      Periode : {{ periode_debut }}<br>
+      au {{ periode_fin }}
+    </div>
+  </div>
+</div>
+
+<h1>{{ titre_document }}</h1>
+
+<div class="bloc-info">
+  <div>
+    <span class="titre">SALARIE</span>
+    {{ salarie.full_name }}<br>
+    SS : {{ salarie.social_security }}<br>
+    Emploi : {{ salarie.job_title }}<br>
+    Dept. : {{ salarie.department }}
+  </div>
+  <div>
+    <span class="titre">EMPLOI</span>
+    Entree : {{ date_entree }}<br>
+    Classification : {{ classification }}<br>
+    Horaire : {{ temps_travail }}
+  </div>
+</div>
+
+<table class="grille">
+  <thead>
+    <tr>
+      <th style="width:30%">Designation</th>
+      <th>Base</th>
+      <th>Taux sal.</th>
+      <th>Part sal.</th>
+      <th>Taux pat.</th>
+      <th>Part pat.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="separateur"><td colspan="6">REMUNERATION</td></tr>
+    <tr>
+      <td>Salaire de base ({{ heures_base }}h)</td>
+      <td class="montant">{{ heures_base }}</td>
+      <td></td>
+      <td class="montant">{{ salaire_base }}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    {% for prime in primes %}
+    <tr>
+      <td>{{ prime.nom }}</td>
+      <td></td>
+      <td></td>
+      <td class="montant">{{ prime.montant }}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    {% endfor %}
+    <tr class="separateur"><td colspan="6">COTISATIONS OBLIGATOIRES</td></tr>
+    {% for cotisation in cotisations %}
+    <tr>
+      <td>{{ cotisation.nom }}</td>
+      <td class="montant">{{ cotisation.base }}</td>
+      <td class="montant">{{ cotisation.taux_salarial }}%</td>
+      <td class="montant">{{ cotisation.part_salariale }}</td>
+      <td class="montant">{{ cotisation.taux_patronal }}%</td>
+      <td class="montant">{{ cotisation.part_patronale }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="separateur">
+      <td colspan="3">TOTAL</td>
+      <td class="montant">{{ total_cotisations_salariales }}</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="cadre-net">
+  <div class="titre-net">Net a payer avant impot sur le revenu</div>
+  <div class="valeur-net">{{ net_a_payer }} EUR</div>
+  <div class="info-paiement">
+    Brut : {{ salaire_brut }} EUR | Cotisations : -{{ total_cotisations_salariales }} EUR | PAS {{ taux_pas }}% : -{{ montant_pas }} EUR<br>
+    Paiement : {{ date_paiement }} par {{ mode_paiement }}
+  </div>
+</div>
+
+<div class="bas-bulletin">
+  <div>
+    <strong>CUMULS ANNUELS</strong>
+    <table>
+      <tr><td>Brut cumule</td><td style="text-align:right">{{ cumul_brut }} EUR</td></tr>
+      <tr><td>Net imposable</td><td style="text-align:right">{{ cumul_net_imposable }} EUR</td></tr>
+    </table>
+  </div>
+  <div>
+    <strong>CONGES</strong>
+    <table>
+      <tr><td>Acquis</td><td style="text-align:right">{{ conges_acquis }} j</td></tr>
+      <tr><td>Pris</td><td style="text-align:right">{{ conges_pris }} j</td></tr>
+      <tr><td>Solde</td><td style="text-align:right">{{ conges_solde }} j</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="mentions">
+  {{ employeur.name }} — SIREN {{ employeur.siren }} — {{ employeur.address }}, {{ employeur.zip_code }} {{ employeur.city }}<br>
+  Dans votre interet, conservez ce bulletin de paie sans limitation de duree.
+</div>
+
+</body>
+</html>

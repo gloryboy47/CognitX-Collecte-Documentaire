@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Arial', sans-serif; font-size: 10.5pt; color: #222; line-height: 1.5; }
+  .header-cr { background: {{ entreprise.logo_color }}; color: white; padding: 15px 20px; margin-bottom: 20px; }
+  .header-cr h1 { margin: 0; font-size: 14pt; }
+  .header-cr .type { font-size: 10pt; opacity: 0.85; }
+  .meta { display: flex; gap: 15px; margin: 15px 0; font-size: 9pt; color: #555; flex-wrap: wrap; }
+  .meta .item { background: #f5f5f5; padding: 5px 10px; border-radius: 3px; }
+  h2 { font-size: 12pt; color: {{ entreprise.logo_color }}; margin: 20px 0 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  .participants table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  .participants th { background: #f0f0f0; padding: 5px 8px; text-align: left; }
+  .participants td { padding: 5px 8px; border-bottom: 1px solid #eee; }
+  .section-content { text-align: justify; margin: 8px 0; }
+  .decisions { background: #e8f5e9; border-left: 3px solid #4caf50; padding: 10px 15px; margin: 10px 0; font-size: 9.5pt; }
+  .pied { margin-top: 30px; font-size: 7.5pt; color: #aaa; border-top: 1px solid #ddd; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="header-cr">
+  <h1>{{ titre_document }}</h1>
+  <div class="type">{{ type_reunion }}</div>
+</div>
+
+<div class="meta">
+  <div class="item"><strong>Date :</strong> {{ date_reunion }}</div>
+  <div class="item"><strong>Lieu :</strong> {{ lieu }}</div>
+  <div class="item"><strong>Duree :</strong> {{ duree }}</div>
+  <div class="item"><strong>Redacteur :</strong> {{ redacteur }}</div>
+</div>
+
+<h2>Participants</h2>
+<div class="participants">
+<table>
+  <thead><tr><th>Nom</th><th>Fonction</th></tr></thead>
+  <tbody>
+    {% for p in participants %}
+    <tr><td>{{ p.full_name }}</td><td>{{ p.job_title }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<h2>Ordre du jour</h2>
+<ol>
+  {% for point in ordre_du_jour %}
+  <li>{{ point }}</li>
+  {% endfor %}
+</ol>
+
+<h2>Points abordes</h2>
+<div class="section-content">
+  {{ points_abordes }}
+</div>
+
+{% if decisions %}
+<h2>Decisions prises</h2>
+{% for decision in decisions %}
+<div class="decisions">
+  <strong>{{ decision.titre }}</strong> — {{ decision.detail }}
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Actions a mener</h2>
+<ul>
+  {% for action in actions %}
+  <li><strong>{{ action.responsable }}</strong> : {{ action.description }} (echeance : {{ action.echeance }})</li>
+  {% endfor %}
+</ul>
+
+<div class="pied">
+  {{ entreprise.name }} — Document interne — {{ date_reunion }}
+</div>
+
+</body>
+</html>

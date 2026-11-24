@@ -1,0 +1,120 @@
+{"montant_ht": 86931.57, "montant_tva": 4781.24, "montant_ttc": 91712.81, "taux_tva": 5.5, "date_emission": "2024-02-19", "emetteur": "Triton Robotics", "destinataire": "Lyra Analytics", "numero": null, "doc_id": "d00001"}
+{"montant_ht": 56219.42, "montant_tva": 11243.88, "montant_ttc": 67463.3, "taux_tva": 20, "date_emission": "2025-03-25", "emetteur": "Optic Lab", "destinataire": "Triton Robotics", "numero": null, "doc_id": "d00002"}
+{"montant_ht": 17324.760000000002, "montant_tva": 952.86, "montant_ttc": 18277.62, "taux_tva": 5.5, "date_emission": "2025-11-16", "emetteur": "Quasar Materials", "destinataire": "Optic Lab", "numero": null, "doc_id": "d00003"}
+{"montant_ht": 67977.94, "montant_tva": 3738.79, "montant_ttc": 71716.73, "taux_tva": 5.5, "date_emission": "2024-11-17", "emetteur": "Lyra Analytics", "destinataire": "Vesta Groupe", "numero": null, "doc_id": "d00004"}
+{"montant_ht": 99233.97, "montant_tva": 19846.79, "montant_ttc": 119080.76, "taux_tva": 20, "date_emission": "2025-11-29", "emetteur": "Dynamo Ingenierie", "destinataire": "Lyra Analytics", "numero": null, "doc_id": "d00005"}
+{"montant_ht": 31363.84, "montant_tva": 6272.77, "montant_ttc": 37636.61, "taux_tva": 20, "date_emission": "2025-12-19", "emetteur": "Quasar Materials", "destinataire": "Watt Ingenierie", "numero": null, "doc_id": "d00006"}
+{"montant_ht": 57362.56, "montant_tva": 11472.51, "montant_ttc": 68835.07, "taux_tva": 20, "date_emission": "2025-10-29", "emetteur": "Optic Lab", "destinataire": "Dynamo Ingenierie", "numero": null, "doc_id": "d00007"}
+{"montant_ht": 45763.68, "montant_tva": 4576.37, "montant_ttc": 50340.05, "taux_tva": 10, "date_emission": "2025-09-24", "emetteur": "Optic Lab", "destinataire": "Lyra Analytics", "numero": null, "doc_id": "d00008"}
+{"montant_ht": 83474.16, "montant_tva": 8347.42, "montant_ttc": 91821.58, "taux_tva": 10, "date_emission": "2024-02-18", "emetteur": "Quasar Materials", "destinataire": "Vesta Groupe", "numero": null, "doc_id": "d00009"}
+{"montant_ht": 78981.62, "montant_tva": 4343.99, "montant_ttc": 83325.61, "taux_tva": 5.5, "date_emission": "2024-02-13", "emetteur": "Optic Lab", "destinataire": "Dynamo Ingenierie", "numero": null, "doc_id": "d00010"}
+{"montant_ht": 112117.98999999999, "montant_tva": 11211.8, "montant_ttc": 123329.79, "taux_tva": 10, "date_emission": "2025-04-03", "emetteur": "Celsius Lab", "destinataire": "Nova Systemes", "numero": null, "doc_id": "d00011"}
+{"montant_ht": 50017.05, "montant_tva": 5001.7, "montant_ttc": 55018.75, "taux_tva": 10, "date_emission": "2026-07-01", "emetteur": "Celsius Lab", "destinataire": "Xenon Dynamics", "numero": null, "doc_id": "d00012"}
+{"montant_ht": 45111.17, "montant_tva": 4511.12, "montant_ttc": 49622.29, "taux_tva": 10, "date_emission": "2024-07-28", "emetteur": "Prism Conseil", "destinataire": "Nova Systemes", "numero": null, "doc_id": "d00013"}
+{"montant_ht": 86804.09999999999, "montant_tva": 8680.41, "montant_ttc": 95484.51, "taux_tva": 10, "date_emission": "2026-02-15", "emetteur": "Quantum Technologies", "destinataire": "Xenon Dynamics", "numero": null, "doc_id": "d00014"}
+{"montant_ht": 54915.26, "montant_tva": 5491.53, "montant_ttc": 60406.79, "taux_tva": 10, "date_emission": "2025-05-20", "emetteur": "Vertex Biotech", "destinataire": "Celsius Lab", "numero": null, "doc_id": "d00015"}
+{"montant_ht": 99272.22, "montant_tva": 5459.97, "montant_ttc": 104732.19, "taux_tva": 5.5, "date_emission": "2025-07-11", "emetteur": "Xenon Dynamics", "destinataire": "Prism Conseil", "numero": null, "doc_id": "d00016"}
+{"montant_ht": 49061.83, "montant_tva": 2698.4, "montant_ttc": 51760.23, "taux_tva": 5.5, "date_emission": "2024-10-14", "emetteur": "Quantum Technologies", "destinataire": "Nebula Solutions", "numero": null, "doc_id": "d00017"}
+{"montant_ht": 49821.91, "montant_tva": 4982.19, "montant_ttc": 54804.1, "taux_tva": 10, "date_emission": "2025-07-03", "emetteur": "Prism Conseil", "destinataire": "Nova Systemes", "numero": null, "doc_id": "d00018"}
+{"montant_ht": 33588.24, "montant_tva": 6717.65, "montant_ttc": 40305.89, "taux_tva": 20, "date_emission": "2024-11-06", "emetteur": "Vertex Biotech", "destinataire": "Celsius Lab", "numero": null, "doc_id": "d00019"}
+{"montant_ht": 40151.73, "montant_tva": 2208.35, "montant_ttc": 42360.08, "taux_tva": 5.5, "date_emission": "2024-09-09", "emetteur": "Prism Conseil", "destinataire": "Celsius Lab", "numero": null, "doc_id": "d00020"}
+{"montant_ht": 12516.54, "montant_tva": 1251.65, "montant_ttc": 13768.19, "taux_tva": 10, "date_emission": "2026-07-11", "emetteur": "Quantum Systemes", "destinataire": "Beta Technologies", "numero": null, "doc_id": "d00021"}
+{"montant_ht": 58838.4, "montant_tva": 3236.11, "montant_ttc": 62074.51, "taux_tva": 5.5, "date_emission": "2026-01-11", "emetteur": "Delta Analytics", "destinataire": "Beta Technologies", "numero": null, "doc_id": "d00022"}
+{"montant_ht": 73034.88, "montant_tva": 7303.49, "montant_ttc": 80338.37, "taux_tva": 10, "date_emission": "2025-09-17", "emetteur": "Quantum Systemes", "destinataire": "Beta Technologies", "numero": null, "doc_id": "d00023"}
+{"montant_ht": 17561.91, "montant_tva": 3512.38, "montant_ttc": 21074.29, "taux_tva": 20, "date_emission": "2026-08-31", "emetteur": "Sigma Engineering", "destinataire": "Zephyr Systemes", "numero": null, "doc_id": "d00024"}
+{"montant_ht": 44638.56, "montant_tva": 8927.71, "montant_ttc": 53566.27, "taux_tva": 20, "date_emission": "2024-05-12", "emetteur": "Xenon Software", "destinataire": "Beta Technologies", "numero": null, "doc_id": "d00025"}
+{"montant_ht": 32373.86, "montant_tva": 1780.56, "montant_ttc": 34154.42, "taux_tva": 5.5, "date_emission": "2024-12-09", "emetteur": "Lyra Solutions", "destinataire": "Zephyr Systemes", "numero": null, "doc_id": "d00026"}
+{"montant_ht": 88166.9, "montant_tva": 4849.18, "montant_ttc": 93016.08, "taux_tva": 5.5, "date_emission": "2025-04-25", "emetteur": "Krypton Consulting", "destinataire": "Zephyr Systemes", "numero": null, "doc_id": "d00027"}
+{"montant_ht": 106805.7, "montant_tva": 21361.14, "montant_ttc": 128166.84, "taux_tva": 20, "date_emission": "2025-03-01", "emetteur": "Xenon Software", "destinataire": "Lyra Solutions", "numero": null, "doc_id": "d00028"}
+{"montant_ht": 53148.64, "montant_tva": 5314.86, "montant_ttc": 58463.5, "taux_tva": 10, "date_emission": "2025-03-08", "emetteur": "Krypton Consulting", "destinataire": "Beta Technologies", "numero": null, "doc_id": "d00029"}
+{"montant_ht": 49450.71, "montant_tva": 2719.79, "montant_ttc": 52170.5, "taux_tva": 5.5, "date_emission": "2024-10-15", "emetteur": "Zephyr Systemes", "destinataire": "Delta Analytics", "numero": null, "doc_id": "d00030"}
+{"salaire_brut": 3674.19, "net_a_payer": 2640.46, "periode": "2024-12", "employeur": "Dynamo Ingenierie", "salarie": "Élodie Merle", "doc_id": "d00031"}
+{"salaire_brut": 2712.63, "net_a_payer": 2057.73, "periode": "2024-05", "employeur": "Triton Robotics", "salarie": "Bertrand Guillot", "doc_id": "d00032"}
+{"salaire_brut": 2535.58, "net_a_payer": 1781.7, "periode": "2025-03", "employeur": "Triton Robotics", "salarie": "Brigitte Blondel", "doc_id": "d00033"}
+{"salaire_brut": 3326.79, "net_a_payer": 2590.03, "periode": "2026-03", "employeur": "Dynamo Ingenierie", "salarie": "Brigitte Blondel", "doc_id": "d00034"}
+{"salaire_brut": 4721.64, "net_a_payer": 3317.8, "periode": "2025-11", "employeur": "Quasar Materials", "salarie": "Claire Leduc", "doc_id": "d00035"}
+{"salaire_brut": 4861.08, "net_a_payer": 3687.51, "periode": "2025-06", "employeur": "Watt Ingenierie", "salarie": "Françoise Rolland", "doc_id": "d00036"}
+{"salaire_brut": 3296.77, "net_a_payer": 2435.03, "periode": "2025-03", "employeur": "Dynamo Ingenierie", "salarie": "David Buisson", "doc_id": "d00037"}
+{"salaire_brut": 5136.86, "net_a_payer": 3794.15, "periode": "2025-08", "employeur": "Vesta Groupe", "salarie": "Christelle Berger", "doc_id": "d00038"}
+{"salaire_brut": 5527.7, "net_a_payer": 4303.53, "periode": "2026-09", "employeur": "Quasar Materials", "salarie": "David Buisson", "doc_id": "d00039"}
+{"salaire_brut": 5249.34, "net_a_payer": 4191.6, "periode": "2026-05", "employeur": "Triton Robotics", "salarie": "Élodie Merle", "doc_id": "d00040"}
+{"salaire_brut": 5113.13, "net_a_payer": 3470.41, "periode": "2025-06", "employeur": "Nova Systemes", "salarie": "Michelle Ribeiro", "doc_id": "d00041"}
+{"salaire_brut": 3824.86, "net_a_payer": 2901.44, "periode": "2026-03", "employeur": "Prism Conseil", "salarie": "Thibaut Renault", "doc_id": "d00042"}
+{"salaire_brut": 4074.15, "net_a_payer": 3009.21, "periode": "2025-09", "employeur": "Radix Lab", "salarie": "Thibaut Renault", "doc_id": "d00043"}
+{"salaire_brut": 5433.16, "net_a_payer": 4229.93, "periode": "2025-11", "employeur": "Nova Systemes", "salarie": "Claire Toussaint", "doc_id": "d00044"}
+{"salaire_brut": 5638.56, "net_a_payer": 4052.16, "periode": "2026-12", "employeur": "Prism Conseil", "salarie": "Frédérique Menard", "doc_id": "d00045"}
+{"salaire_brut": 2864.27, "net_a_payer": 2058.42, "periode": "2024-03", "employeur": "Nova Systemes", "salarie": "Dorothée Tanguy", "doc_id": "d00046"}
+{"salaire_brut": 4212.91, "net_a_payer": 2960.33, "periode": "2025-05", "employeur": "Radix Lab", "salarie": "Arnaude Cordier", "doc_id": "d00047"}
+{"salaire_brut": 3747.06, "net_a_payer": 2632.99, "periode": "2026-03", "employeur": "Nova Systemes", "salarie": "Patrick Caron", "doc_id": "d00048"}
+{"salaire_brut": 2922.13, "net_a_payer": 2053.32, "periode": "2026-07", "employeur": "Quantum Technologies", "salarie": "Marthe Lefebvre", "doc_id": "d00049"}
+{"salaire_brut": 4260.49, "net_a_payer": 2891.71, "periode": "2024-03", "employeur": "Prism Conseil", "salarie": "Thibaut Renault", "doc_id": "d00050"}
+{"salaire_brut": 2775.65, "net_a_payer": 2105.55, "periode": "2024-12", "employeur": "Xenon Software", "salarie": "Élodie Teixeira", "doc_id": "d00051"}
+{"salaire_brut": 2614.41, "net_a_payer": 2035.42, "periode": "2025-09", "employeur": "Zephyr Systemes", "salarie": "Hugues Bernard", "doc_id": "d00052"}
+{"salaire_brut": 4324.58, "net_a_payer": 2935.2, "periode": "2024-06", "employeur": "Beta Technologies", "salarie": "Maurice Jourdan", "doc_id": "d00053"}
+{"salaire_brut": 5656.65, "net_a_payer": 3974.82, "periode": "2026-02", "employeur": "Quantum Systemes", "salarie": "Gabriel François", "doc_id": "d00054"}
+{"salaire_brut": 4961.44, "net_a_payer": 3961.7, "periode": "2025-10", "employeur": "Sigma Engineering", "salarie": "Émile Menard", "doc_id": "d00055"}
+{"salaire_brut": 3607.76, "net_a_payer": 2592.71, "periode": "2024-03", "employeur": "Beta Technologies", "salarie": "Maurice Jourdan", "doc_id": "d00056"}
+{"salaire_brut": 4737.41, "net_a_payer": 3404.55, "periode": "2026-07", "employeur": "Quantum Systemes", "salarie": "Théodore Louis", "doc_id": "d00057"}
+{"salaire_brut": 2884.62, "net_a_payer": 2073.03, "periode": "2025-10", "employeur": "Delta Analytics", "salarie": "Alexandre Neveu", "doc_id": "d00058"}
+{"salaire_brut": 5002.0, "net_a_payer": 3794.39, "periode": "2026-01", "employeur": "Delta Analytics", "salarie": "Martine De Sousa", "doc_id": "d00059"}
+{"salaire_brut": 5096.63, "net_a_payer": 3459.21, "periode": "2024-03", "employeur": "Quantum Systemes", "salarie": "Paulette Guillaume", "doc_id": "d00060"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Optic Lab", "partie_b": "Vesta Groupe", "date": "2023-12-15", "doc_id": "d00061"}
+{"type_contrat": "Contrat de travail a duree indeterminee", "partie_a": "Lyra Analytics", "partie_b": "Capucine Dias", "date": "2026-01-20", "doc_id": "d00062"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Optic Lab", "partie_b": "Watt Ingenierie", "date": "2024-07-12", "doc_id": "d00063"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Watt Ingenierie", "partie_b": "Dynamo Ingenierie", "date": "2023-07-22", "doc_id": "d00064"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Radix Services", "partie_b": "Quasar Materials", "date": "2023-06-07", "doc_id": "d00065"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Lyra Analytics", "partie_b": "Triton Robotics", "date": "2025-12-22", "doc_id": "d00066"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Watt Ingenierie", "partie_b": "Lyra Analytics", "date": "2023-11-24", "doc_id": "d00067"}
+{"type_contrat": "Contrat de travail a duree indeterminee", "partie_a": "Lyra Analytics", "partie_b": "Brigitte Blondel", "date": "2024-12-27", "doc_id": "d00068"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Vesta Groupe", "partie_b": "Watt Ingenierie", "date": "2023-07-18", "doc_id": "d00069"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Radix Services", "partie_b": "Triton Robotics", "date": "2023-05-21", "doc_id": "d00070"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Celsius Lab", "partie_b": "Vertex Biotech", "date": "2025-01-27", "doc_id": "d00071"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Nebula Solutions", "partie_b": "Prism Conseil", "date": "2024-12-20", "doc_id": "d00072"}
+{"type_contrat": "Contrat de travail a duree indeterminee", "partie_a": "Radix Lab", "partie_b": "Margot Benoit", "date": "2026-04-03", "doc_id": "d00073"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Vertex Biotech", "partie_b": "Nebula Solutions", "date": "2024-12-21", "doc_id": "d00074"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Nebula Solutions", "partie_b": "Vertex Biotech", "date": "2023-12-31", "doc_id": "d00075"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Xenon Dynamics", "partie_b": "Quantum Technologies", "date": "2023-01-11", "doc_id": "d00076"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Vertex Biotech", "partie_b": "Nova Systemes", "date": "2024-03-17", "doc_id": "d00077"}
+{"type_contrat": "Contrat de travail a duree indeterminee", "partie_a": "Nova Systemes", "partie_b": "Thérèse Hamel", "date": "2023-08-07", "doc_id": "d00078"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Nova Systemes", "partie_b": "Prism Conseil", "date": "2025-02-03", "doc_id": "d00079"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Xenon Dynamics", "partie_b": "Radix Lab", "date": "2025-01-03", "doc_id": "d00080"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Zephyr Systemes", "partie_b": "Quantum Systemes", "date": "2024-07-27", "doc_id": "d00081"}
+{"type_contrat": "Contrat de prestation de services", "partie_a": "Beta Technologies", "partie_b": "Xenon Software", "date": "2026-07-28", "doc_id": "d00082"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Quantum Systemes", "partie_b": "Zephyr Systemes", "date": "2025-06-16", "doc_id": "d00083"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Lyra Solutions", "partie_b": "Sigma Engineering", "date": "2026-01-03", "doc_id": "d00084"}
+{"type_contrat": "Contrat de travail a duree indeterminee", "partie_a": "Zephyr Systemes", "partie_b": "Émile Menard", "date": "2024-05-19", "doc_id": "d00085"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Quantum Systemes", "partie_b": "Beta Technologies", "date": "2025-10-21", "doc_id": "d00086"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Lyra Solutions", "partie_b": "Delta Analytics", "date": "2026-02-28", "doc_id": "d00087"}
+{"type_contrat": "Convention de collaboration de recherche", "partie_a": "Delta Analytics", "partie_b": "Sigma Engineering", "date": "2026-04-21", "doc_id": "d00088"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Beta Technologies", "partie_b": "Lyra Solutions", "date": "2024-05-21", "doc_id": "d00089"}
+{"type_contrat": "Contrat de sous-traitance", "partie_a": "Xenon Software", "partie_b": "Beta Technologies", "date": "2024-07-16", "doc_id": "d00090"}
+{"date_reunion": "2025-08-08", "domaine_rd": "chimie", "entreprise": "Radix Services", "nb_participants": 3, "doc_id": "d00091"}
+{"date_reunion": "2026-07-01", "domaine_rd": "logiciel", "entreprise": "Triton Robotics", "nb_participants": 3, "doc_id": "d00092"}
+{"date_reunion": "2026-08-04", "domaine_rd": "chimie", "entreprise": "Optic Lab", "nb_participants": 5, "doc_id": "d00093"}
+{"date_reunion": "2024-09-06", "domaine_rd": "logiciel", "entreprise": "Triton Robotics", "nb_participants": 5, "doc_id": "d00094"}
+{"date_reunion": "2025-08-21", "domaine_rd": "chimie", "entreprise": "Lyra Analytics", "nb_participants": 4, "doc_id": "d00095"}
+{"date_reunion": "2025-10-19", "domaine_rd": "chimie", "entreprise": "Lyra Analytics", "nb_participants": 3, "doc_id": "d00096"}
+{"date_reunion": "2024-12-24", "domaine_rd": "logiciel", "entreprise": "Dynamo Ingenierie", "nb_participants": 4, "doc_id": "d00097"}
+{"date_reunion": "2026-07-22", "domaine_rd": "mecanique", "entreprise": "Triton Robotics", "nb_participants": 6, "doc_id": "d00098"}
+{"date_reunion": "2026-08-17", "domaine_rd": "logiciel", "entreprise": "Quasar Materials", "nb_participants": 6, "doc_id": "d00099"}
+{"date_reunion": "2026-05-14", "domaine_rd": "logiciel", "entreprise": "Vesta Groupe", "nb_participants": 4, "doc_id": "d00100"}
+{"date_reunion": "2025-01-01", "domaine_rd": "electronique", "entreprise": "Nebula Solutions", "nb_participants": 3, "doc_id": "d00101"}
+{"date_reunion": "2024-03-09", "domaine_rd": "materiaux", "entreprise": "Radix Lab", "nb_participants": 3, "doc_id": "d00102"}
+{"date_reunion": "2026-05-03", "domaine_rd": "materiaux", "entreprise": "Prism Conseil", "nb_participants": 6, "doc_id": "d00103"}
+{"date_reunion": "2025-07-20", "domaine_rd": "materiaux", "entreprise": "Vertex Biotech", "nb_participants": 3, "doc_id": "d00104"}
+{"date_reunion": "2026-08-03", "domaine_rd": "electronique", "entreprise": "Celsius Lab", "nb_participants": 6, "doc_id": "d00105"}
+{"date_reunion": "2025-11-01", "domaine_rd": "materiaux", "entreprise": "Xenon Dynamics", "nb_participants": 4, "doc_id": "d00106"}
+{"date_reunion": "2026-09-13", "domaine_rd": "agronomie", "entreprise": "Xenon Dynamics", "nb_participants": 3, "doc_id": "d00107"}
+{"date_reunion": "2026-02-04", "domaine_rd": "agronomie", "entreprise": "Prism Conseil", "nb_participants": 6, "doc_id": "d00108"}
+{"date_reunion": "2026-08-21", "domaine_rd": "electronique", "entreprise": "Quantum Technologies", "nb_participants": 3, "doc_id": "d00109"}
+{"date_reunion": "2025-11-29", "domaine_rd": "agronomie", "entreprise": "Quantum Technologies", "nb_participants": 3, "doc_id": "d00110"}
+{"date_reunion": "2026-08-06", "domaine_rd": "sante", "entreprise": "Delta Analytics", "nb_participants": 6, "doc_id": "d00111"}
+{"date_reunion": "2024-01-28", "domaine_rd": "sante", "entreprise": "Krypton Consulting", "nb_participants": 6, "doc_id": "d00112"}
+{"date_reunion": "2024-02-15", "domaine_rd": "sante", "entreprise": "Xenon Software", "nb_participants": 6, "doc_id": "d00113"}
+{"date_reunion": "2026-09-11", "domaine_rd": "sante", "entreprise": "Krypton Consulting", "nb_participants": 3, "doc_id": "d00114"}
+{"date_reunion": "2026-01-01", "domaine_rd": "environnement", "entreprise": "Krypton Consulting", "nb_participants": 4, "doc_id": "d00115"}
+{"date_reunion": "2025-04-09", "domaine_rd": "sante", "entreprise": "Quantum Systemes", "nb_participants": 4, "doc_id": "d00116"}
+{"date_reunion": "2025-06-23", "domaine_rd": "environnement", "entreprise": "Sigma Engineering", "nb_participants": 6, "doc_id": "d00117"}
+{"date_reunion": "2026-03-10", "domaine_rd": "sante", "entreprise": "Lyra Solutions", "nb_participants": 5, "doc_id": "d00118"}
+{"date_reunion": "2024-10-02", "domaine_rd": "sante", "entreprise": "Delta Analytics", "nb_participants": 3, "doc_id": "d00119"}
+{"date_reunion": "2026-06-03", "domaine_rd": "environnement", "entreprise": "Sigma Engineering", "nb_participants": 6, "doc_id": "d00120"}

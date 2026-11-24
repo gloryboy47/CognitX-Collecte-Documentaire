@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 18mm; }
+  body { font-family: 'Georgia', serif; font-size: 10pt; color: #333; line-height: 1.4; }
+  .bandeau { background: {{ emetteur.logo_color }}; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
+  .bandeau h1 { margin: 0; font-size: 12pt; letter-spacing: 1px; }
+  .bandeau .num { font-size: 8pt; opacity: 0.8; }
+  .deux-blocs { display: flex; gap: 15px; margin: 15px 0; }
+  .bloc-addr { flex: 1; border: 1px solid #ddd; padding: 10px; border-radius: 4px; font-size: 9pt; }
+  .bloc-addr .etiq { font-size: 7.5pt; text-transform: uppercase; color: {{ emetteur.logo_color }}; font-weight: bold; margin-bottom: 5px; }
+  .info-devis { background: #f8f8f8; padding: 8px 12px; margin: 10px 0; font-size: 9pt; display: flex; justify-content: space-between; border-left: 3px solid {{ emetteur.logo_color }}; }
+  table.prestations { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 9.5pt; }
+  table.prestations th { background: #f0f0f0; border-bottom: 2px solid {{ emetteur.logo_color }}; padding: 6px 8px; text-align: left; font-size: 8.5pt; text-transform: uppercase; }
+  table.prestations td { padding: 6px 8px; border-bottom: 1px dotted #ccc; }
+  table.prestations tr:nth-child(even) { background: #fafafa; }
+  .recap { text-align: right; margin: 10px 0; }
+  .recap table { margin-left: auto; }
+  .recap td { padding: 3px 10px; font-size: 10pt; }
+  .recap .ttc { font-size: 13pt; font-weight: bold; color: {{ emetteur.logo_color }}; border-top: 2px solid {{ emetteur.logo_color }}; }
+  .cadre-conditions { border: 1px solid #ddd; padding: 10px; margin: 15px 0; border-radius: 5px; font-size: 9pt; color: #555; }
+  .cadre-conditions h3 { margin: 0 0 5px; font-size: 9.5pt; color: #333; }
+  .accord { margin-top: 25px; padding: 12px; border: 2px dashed {{ emetteur.logo_color }}; text-align: center; font-size: 9pt; color: #666; }
+  .accord strong { color: #333; }
+  .pied { margin-top: 20px; font-size: 7.5pt; color: #aaa; text-align: center; border-top: 1px solid #ddd; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="bandeau">
+  <h1>{{ titre_document }}</h1>
+  <div class="num">N° {{ numero }} | Valable jusqu'au {{ date_validite }}</div>
+</div>
+
+<div class="deux-blocs">
+  <div class="bloc-addr">
+    <div class="etiq">Emetteur</div>
+    <strong>{{ emetteur.name }}</strong><br>
+    {{ emetteur.address }}<br>
+    {{ emetteur.zip_code }} {{ emetteur.city }}<br>
+    SIREN {{ emetteur.siren }}
+  </div>
+  <div class="bloc-addr">
+    <div class="etiq">Destinataire</div>
+    <strong>{{ destinataire.name }}</strong><br>
+    {{ destinataire.address }}<br>
+    {{ destinataire.zip_code }} {{ destinataire.city }}
+  </div>
+</div>
+
+<div class="info-devis">
+  <span><strong>Date :</strong> {{ date_emission }}</span>
+  <span><strong>Objet :</strong> {{ objet }}</span>
+</div>
+
+<table class="prestations">
+  <thead>
+    <tr><th>Designation</th><th>Qte</th><th>PU HT</th><th>Montant HT</th></tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+    <tr>
+      <td>{{ ligne.designation }}</td>
+      <td>{{ ligne.quantite }}</td>
+      <td>{{ ligne.prix_unitaire }} EUR</td>
+      <td>{{ ligne.montant_ht }} EUR</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="recap">
+  <table>
+    <tr><td>Total HT</td><td>{{ total_ht }} EUR</td></tr>
+    <tr><td>TVA {{ taux_tva }}%</td><td>{{ montant_tva }} EUR</td></tr>
+    <tr><td class="ttc">Total TTC</td><td class="ttc">{{ total_ttc }} EUR</td></tr>
+  </table>
+</div>
+
+<div class="cadre-conditions">
+  <h3>Conditions particulieres</h3>
+  {{ conditions }}
+</div>
+
+<div class="accord">
+  <strong>Bon pour accord</strong><br>
+  Date et signature du client
+  <br><br><br>
+</div>
+
+<div class="pied">
+  {{ emetteur.name }} — {{ emetteur.siren }} — {{ emetteur.tva }}
+</div>
+
+</body>
+</html>

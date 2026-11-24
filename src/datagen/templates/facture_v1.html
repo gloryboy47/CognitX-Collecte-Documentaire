@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Helvetica', 'Arial', sans-serif; font-size: 11pt; color: #222; line-height: 1.4; }
+  .header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+  .logo-block { background: {{ emetteur.logo_color }}; color: white; padding: 12px 20px; font-size: 18pt; font-weight: bold; border-radius: 4px; }
+  .emetteur { font-size: 9pt; color: #555; margin-top: 10px; }
+  .destinataire { text-align: right; }
+  .titre { font-size: 16pt; font-weight: bold; color: {{ emetteur.logo_color }}; margin: 20px 0 10px; }
+  .meta-table { width: 100%; margin-bottom: 20px; }
+  .meta-table td { padding: 4px 8px; font-size: 10pt; }
+  .meta-table .label { font-weight: bold; color: #555; width: 160px; }
+  table.lignes { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  table.lignes th { background: {{ emetteur.logo_color }}; color: white; padding: 8px 10px; text-align: left; font-size: 10pt; }
+  table.lignes td { padding: 8px 10px; border-bottom: 1px solid #ddd; font-size: 10pt; }
+  table.lignes tr:nth-child(even) { background: #f9f9f9; }
+  .totaux { text-align: right; margin-top: 10px; }
+  .totaux table { margin-left: auto; }
+  .totaux td { padding: 4px 12px; font-size: 10pt; }
+  .totaux .total-ttc { font-weight: bold; font-size: 12pt; color: {{ emetteur.logo_color }}; border-top: 2px solid {{ emetteur.logo_color }}; }
+  .footer { margin-top: 40px; font-size: 8pt; color: #888; border-top: 1px solid #ddd; padding-top: 10px; }
+  .mentions { font-size: 8pt; color: #666; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo-block">{{ emetteur.name }}</div>
+    <div class="emetteur">
+      {{ emetteur.address }}<br>
+      {{ emetteur.zip_code }} {{ emetteur.city }}<br>
+      Tel : {{ emetteur.phone }}<br>
+      {{ emetteur.email }}<br>
+      SIREN : {{ emetteur.siren }}<br>
+      TVA : {{ emetteur.tva }}
+    </div>
+  </div>
+  <div class="destinataire">
+    <strong>{{ destinataire.name }}</strong><br>
+    {{ destinataire.address }}<br>
+    {{ destinataire.zip_code }} {{ destinataire.city }}
+  </div>
+</div>
+
+<div class="titre">{{ titre_document }}</div>
+
+<table class="meta-table">
+  <tr><td class="label">Numero de facture :</td><td>{{ numero }}</td></tr>
+  <tr><td class="label">Date d'emission :</td><td>{{ date_emission }}</td></tr>
+  <tr><td class="label">Date d'echeance :</td><td>{{ date_echeance }}</td></tr>
+  {% if reference_commande %}<tr><td class="label">Reference commande :</td><td>{{ reference_commande }}</td></tr>{% endif %}
+</table>
+
+<table class="lignes">
+  <thead>
+    <tr>
+      <th>Designation</th>
+      <th>Quantite</th>
+      <th>Prix unitaire HT</th>
+      <th>Montant HT</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+    <tr>
+      <td>{{ ligne.designation }}</td>
+      <td>{{ ligne.quantite }}</td>
+      <td>{{ ligne.prix_unitaire }} EUR</td>
+      <td>{{ ligne.montant_ht }} EUR</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="totaux">
+  <table>
+    <tr><td>Total HT :</td><td>{{ total_ht }} EUR</td></tr>
+    <tr><td>TVA ({{ taux_tva }}%) :</td><td>{{ montant_tva }} EUR</td></tr>
+    <tr><td class="total-ttc">Total TTC :</td><td class="total-ttc">{{ total_ttc }} EUR</td></tr>
+  </table>
+</div>
+
+<div class="mentions">
+  {{ mentions_legales }}
+</div>
+
+<div class="footer">
+  {{ emetteur.name }} — SIREN {{ emetteur.siren }} — TVA {{ emetteur.tva }}<br>
+  IBAN : {{ emetteur.iban }}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "model_name": "tfidf_rf_v2",
+  "model_version": "2.0.0",
+  "algorithm": "TF-IDF (word) + Keywords metier + RandomForest",
+  "classes": [
+    "facture",
+    "fiche_de_paie",
+    "contrat",
+    "compte_rendu_rd",
+    "autre"
+  ],
+  "seed": 42,
+  "train_samples": 80,
+  "val_samples": 80,
+  "test_samples": 80,
+  "train_time_s": 0.15,
+  "trained_at": "2026-11-24T16:00:37.481772+00:00",
+  "val_metrics": {
+    "accuracy": 1.0,
+    "f1_macro": 1.0,
+    "f1_weighted": 1.0,
+    "mean_confidence": 0.7917
+  },
+  "test_metrics": {
+    "accuracy": 0.9875,
+    "f1_macro": 0.987,
+    "f1_weighted": 0.9872,
+    "mean_confidence": 0.7687
+  }
+}

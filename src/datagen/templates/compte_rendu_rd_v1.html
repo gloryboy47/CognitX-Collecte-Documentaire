@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Helvetica', 'Arial', sans-serif; font-size: 10.5pt; color: #222; line-height: 1.5; }
+  .header-cr { background: {{ entreprise.logo_color }}; color: white; padding: 15px 20px; margin-bottom: 20px; }
+  .header-cr h1 { margin: 0; font-size: 14pt; }
+  .header-cr .projet { font-size: 10pt; opacity: 0.85; margin-top: 3px; }
+  .meta { display: flex; gap: 20px; margin: 15px 0; font-size: 9pt; color: #555; flex-wrap: wrap; }
+  .meta .item { background: #f5f5f5; padding: 6px 12px; border-radius: 3px; }
+  .meta .label { font-weight: bold; color: #333; }
+  h2 { font-size: 12pt; color: {{ entreprise.logo_color }}; margin: 20px 0 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  .participants { font-size: 9pt; }
+  .participants table { border-collapse: collapse; width: 100%; }
+  .participants th { background: #f0f0f0; padding: 5px 8px; text-align: left; font-size: 8.5pt; text-transform: uppercase; }
+  .participants td { padding: 5px 8px; border-bottom: 1px solid #eee; }
+  .section-content { text-align: justify; margin: 8px 0; }
+  .verrous { background: #fff3cd; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; font-size: 9.5pt; }
+  .verrous strong { color: #856404; }
+  .actions { margin: 10px 0; }
+  .actions table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  .actions th { background: {{ entreprise.logo_color }}; color: white; padding: 6px 8px; text-align: left; }
+  .actions td { padding: 6px 8px; border-bottom: 1px solid #ddd; }
+  .pied { margin-top: 30px; font-size: 7.5pt; color: #aaa; border-top: 1px solid #ddd; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="header-cr">
+  <h1>{{ titre_document }}</h1>
+  <div class="projet">Projet : {{ nom_projet }} — {{ domaine_rd }}</div>
+</div>
+
+<div class="meta">
+  <div class="item"><span class="label">Date :</span> {{ date_reunion }}</div>
+  <div class="item"><span class="label">Lieu :</span> {{ lieu }}</div>
+  <div class="item"><span class="label">Duree :</span> {{ duree }}</div>
+  <div class="item"><span class="label">Redacteur :</span> {{ redacteur }}</div>
+  <div class="item"><span class="label">Ref :</span> {{ reference }}</div>
+</div>
+
+<h2>Participants</h2>
+<div class="participants">
+<table>
+  <thead><tr><th>Nom</th><th>Fonction</th><th>Service</th></tr></thead>
+  <tbody>
+    {% for p in participants %}
+    <tr><td>{{ p.full_name }}</td><td>{{ p.job_title }}</td><td>{{ p.department }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<h2>Ordre du jour</h2>
+<ol>
+  {% for point in ordre_du_jour %}
+  <li>{{ point }}</li>
+  {% endfor %}
+</ol>
+
+<h2>Travaux realises</h2>
+<div class="section-content">
+  {{ travaux_realises }}
+</div>
+
+<h2>Resultats obtenus</h2>
+<div class="section-content">
+  {{ resultats }}
+</div>
+
+{% if verrous %}
+<h2>Verrous et incertitudes techniques</h2>
+{% for verrou in verrous %}
+<div class="verrous">
+  <strong>{{ verrou.titre }}</strong><br>
+  {{ verrou.description }}
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Prochaines etapes</h2>
+<div class="actions">
+<table>
+  <thead><tr><th>Action</th><th>Responsable</th><th>Echeance</th></tr></thead>
+  <tbody>
+    {% for action in prochaines_etapes %}
+    <tr><td>{{ action.description }}</td><td>{{ action.responsable }}</td><td>{{ action.echeance }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<div class="pied">
+  {{ entreprise.name }} — Projet {{ nom_projet }} — Document confidentiel — {{ reference }}
+</div>
+
+</body>
+</html>

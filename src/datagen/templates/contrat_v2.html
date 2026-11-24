@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Arial', 'Helvetica', sans-serif; font-size: 10pt; color: #333; line-height: 1.5; }
+  .header-bar { background: {{ partie_a.logo_color }}; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .header-bar h1 { margin: 0; font-size: 14pt; }
+  .header-bar .meta { font-size: 8pt; opacity: 0.85; text-align: right; }
+  .parties-grid { display: flex; gap: 15px; margin: 20px 0; }
+  .partie-card { flex: 1; border: 1px solid #ddd; border-top: 3px solid {{ partie_a.logo_color }}; padding: 12px; background: #fafafa; }
+  .partie-card .role { font-size: 8pt; text-transform: uppercase; color: {{ partie_a.logo_color }}; font-weight: bold; margin-bottom: 6px; }
+  .partie-card .nom { font-size: 11pt; font-weight: bold; margin-bottom: 4px; }
+  .partie-card p { margin: 2px 0; font-size: 9pt; color: #555; }
+  .articles { margin: 20px 0; }
+  .article { margin: 15px 0; page-break-inside: avoid; }
+  .article-titre { font-size: 11pt; font-weight: bold; color: {{ partie_a.logo_color }}; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 6px; }
+  .article-contenu { text-align: justify; font-size: 10pt; }
+  .signatures { display: flex; justify-content: space-around; margin-top: 40px; padding-top: 20px; border-top: 2px solid {{ partie_a.logo_color }}; }
+  .sig { text-align: center; width: 35%; }
+  .sig .pour { font-size: 8pt; color: #888; text-transform: uppercase; }
+  .sig .ligne { border-bottom: 1px solid #333; height: 50px; margin: 10px 0; }
+  .sig .nom { font-weight: bold; font-size: 10pt; }
+  .footer { margin-top: 30px; text-align: center; font-size: 7.5pt; color: #aaa; }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <h1>{{ titre_document }}</h1>
+  <div class="meta">{{ sous_titre }}<br>{{ lieu }}, le {{ date_contrat }}</div>
+</div>
+
+<div class="parties-grid">
+  <div class="partie-card">
+    <div class="role">{{ denomination_a }}</div>
+    <div class="nom">{{ partie_a.name }}</div>
+    <p>SIREN : {{ partie_a.siren }}</p>
+    <p>{{ partie_a.address }}, {{ partie_a.zip_code }} {{ partie_a.city }}</p>
+    <p>Representee par {{ representant_a }}, {{ qualite_a }}</p>
+  </div>
+  <div class="partie-card">
+    <div class="role">{{ denomination_b }}</div>
+    <div class="nom">{{ partie_b_nom }}</div>
+    {% if partie_b_siren %}<p>SIREN : {{ partie_b_siren }}</p>{% endif %}
+    <p>{{ partie_b_adresse }}</p>
+    {% if representant_b %}<p>Representee par {{ representant_b }}</p>{% endif %}
+  </div>
+</div>
+
+<div class="articles">
+{% for article in articles %}
+  <div class="article">
+    <div class="article-titre">Art. {{ article.numero }} — {{ article.titre }}</div>
+    <div class="article-contenu">{{ article.contenu }}</div>
+  </div>
+{% endfor %}
+</div>
+
+<div class="signatures">
+  <div class="sig">
+    <div class="pour">Pour {{ denomination_a }}</div>
+    <div class="ligne"></div>
+    <div class="nom">{{ representant_a }}</div>
+  </div>
+  <div class="sig">
+    <div class="pour">Pour {{ denomination_b }}</div>
+    <div class="ligne"></div>
+    <div class="nom">{% if representant_b %}{{ representant_b }}{% else %}{{ partie_b_nom }}{% endif %}</div>
+  </div>
+</div>
+
+<div class="footer">
+  Fait en deux exemplaires originaux a {{ lieu }}, le {{ date_contrat }}.<br>
+  Chaque partie reconnaissant avoir recu le sien.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Courier New', monospace; font-size: 10pt; color: #000; line-height: 1.3; }
+  .entete { border: 2px solid #000; padding: 10px; display: flex; justify-content: space-between; margin-bottom: 15px; }
+  .entete .gauche { width: 55%; }
+  .entete .droite { width: 40%; text-align: right; font-size: 8.5pt; }
+  h1 { text-align: center; font-size: 14pt; letter-spacing: 3px; text-transform: uppercase; border-top: 3px solid #000; border-bottom: 3px solid #000; padding: 8px 0; margin: 15px 0; }
+  .destinataire-cadre { border: 1px solid #000; padding: 8px; margin: 10px 0; width: 50%; margin-left: auto; font-size: 9pt; }
+  .destinataire-cadre .titre { font-weight: bold; text-decoration: underline; margin-bottom: 4px; }
+  .meta-info { font-size: 9pt; margin: 10px 0; }
+  .meta-info td { padding: 2px 8px; }
+  .meta-info .label { font-weight: bold; }
+  table.lignes { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 9pt; }
+  table.lignes th, table.lignes td { border: 1px solid #000; padding: 5px 8px; }
+  table.lignes th { background: #ddd; text-align: center; font-size: 8pt; text-transform: uppercase; }
+  table.lignes td.num { text-align: right; font-family: 'Courier New', monospace; }
+  .totaux-cadre { border: 2px solid #000; padding: 8px; margin: 10px 0; width: 45%; margin-left: auto; }
+  .totaux-cadre td { padding: 3px 8px; font-size: 10pt; }
+  .totaux-cadre .total { font-weight: bold; font-size: 12pt; border-top: 2px solid #000; }
+  .conditions-box { border: 1px solid #000; padding: 8px; margin: 15px 0; font-size: 8.5pt; }
+  .conditions-box strong { text-decoration: underline; }
+  .signature { margin-top: 25px; text-align: center; font-size: 9pt; }
+  .signature .cadre { border: 1px dashed #000; height: 50px; width: 50%; margin: 10px auto; }
+  .pied { margin-top: 20px; font-size: 7pt; color: #777; text-align: center; border-top: 2px solid #000; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="entete">
+  <div class="gauche">
+    <strong style="font-size: 12pt;">{{ emetteur.name }}</strong><br>
+    {{ emetteur.address }}<br>
+    {{ emetteur.zip_code }} {{ emetteur.city }}<br>
+    SIREN : {{ emetteur.siren }}
+  </div>
+  <div class="droite">
+    N° {{ numero }}<br>
+    Date : {{ date_emission }}<br>
+    Validite : {{ date_validite }}
+  </div>
+</div>
+
+<h1>{{ titre_document }}</h1>
+
+<div class="destinataire-cadre">
+  <div class="titre">DESTINATAIRE</div>
+  {{ destinataire.name }}<br>
+  {{ destinataire.address }}<br>
+  {{ destinataire.zip_code }} {{ destinataire.city }}
+</div>
+
+<table class="meta-info">
+  <tr><td class="label">Objet :</td><td>{{ objet }}</td></tr>
+</table>
+
+<table class="lignes">
+  <thead>
+    <tr><th>Designation</th><th>Qte</th><th>P.U. HT</th><th>Total HT</th></tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+    <tr>
+      <td>{{ ligne.designation }}</td>
+      <td class="num">{{ ligne.quantite }}</td>
+      <td class="num">{{ ligne.prix_unitaire }}</td>
+      <td class="num">{{ ligne.montant_ht }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="totaux-cadre">
+  <table style="width:100%;">
+    <tr><td>Total HT</td><td style="text-align:right">{{ total_ht }} EUR</td></tr>
+    <tr><td>TVA {{ taux_tva }}%</td><td style="text-align:right">{{ montant_tva }} EUR</td></tr>
+    <tr><td class="total">Total TTC</td><td class="total" style="text-align:right">{{ total_ttc }} EUR</td></tr>
+  </table>
+</div>
+
+<div class="conditions-box">
+  <strong>CONDITIONS :</strong><br>
+  {{ conditions }}
+</div>
+
+<div class="signature">
+  <strong>BON POUR ACCORD</strong><br>
+  Date et signature du client
+  <div class="cadre"></div>
+</div>
+
+<div class="pied">
+  {{ emetteur.name }} — {{ emetteur.siren }} — {{ emetteur.tva }} — Devis non contractuel
+</div>
+
+</body>
+</html>

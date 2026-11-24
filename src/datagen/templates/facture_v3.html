@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 22mm; }
+  body { font-family: 'Courier New', monospace; font-size: 10pt; color: #111; line-height: 1.4; }
+  .top { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 3px double #333; }
+  .top h1 { font-size: 14pt; margin: 0; letter-spacing: 3px; text-transform: uppercase; }
+  .top .num { font-size: 10pt; color: #555; margin-top: 5px; }
+  .bloc-parties { display: flex; justify-content: space-between; margin: 20px 0; }
+  .bloc-parties div { width: 48%; font-size: 9pt; }
+  .bloc-parties strong { display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 8pt; color: #777; letter-spacing: 1px; }
+  .infos { margin: 15px 0; font-size: 9.5pt; }
+  .infos span { margin-right: 25px; }
+  .infos .lbl { font-weight: bold; }
+  table.items { width: 100%; border: 1px solid #333; border-collapse: collapse; margin: 15px 0; }
+  table.items th, table.items td { border: 1px solid #999; padding: 6px 8px; font-size: 9.5pt; }
+  table.items th { background: #eee; text-align: center; text-transform: uppercase; font-size: 8pt; letter-spacing: 0.5px; }
+  table.items td:nth-child(n+2) { text-align: right; }
+  .total-section { text-align: right; margin: 15px 0; font-size: 10pt; }
+  .total-section .line { margin: 3px 0; }
+  .total-section .grand-total { font-size: 12pt; font-weight: bold; border-top: 2px solid #333; padding-top: 5px; margin-top: 5px; }
+  .bottom { margin-top: 30px; font-size: 7.5pt; color: #888; border-top: 1px solid #ccc; padding-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>{{ titre_document }}</h1>
+  <div class="num">Ref. {{ numero }}</div>
+</div>
+
+<div class="bloc-parties">
+  <div>
+    <strong>De</strong>
+    {{ emetteur.name }}<br>
+    {{ emetteur.address }}<br>
+    {{ emetteur.zip_code }} {{ emetteur.city }}<br>
+    SIREN {{ emetteur.siren }}
+  </div>
+  <div>
+    <strong>A</strong>
+    {{ destinataire.name }}<br>
+    {{ destinataire.address }}<br>
+    {{ destinataire.zip_code }} {{ destinataire.city }}
+  </div>
+</div>
+
+<div class="infos">
+  <span><span class="lbl">Date :</span> {{ date_emission }}</span>
+  <span><span class="lbl">Echeance :</span> {{ date_echeance }}</span>
+  {% if reference_commande %}<span><span class="lbl">Commande :</span> {{ reference_commande }}</span>{% endif %}
+</div>
+
+<table class="items">
+  <thead>
+    <tr><th>Description</th><th>Qte</th><th>PU HT</th><th>Total HT</th></tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+    <tr>
+      <td>{{ ligne.designation }}</td>
+      <td>{{ ligne.quantite }}</td>
+      <td>{{ ligne.prix_unitaire }}</td>
+      <td>{{ ligne.montant_ht }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="total-section">
+  <div class="line">Total HT : {{ total_ht }} EUR</div>
+  <div class="line">TVA ({{ taux_tva }}%) : {{ montant_tva }} EUR</div>
+  <div class="grand-total">Total TTC : {{ total_ttc }} EUR</div>
+</div>
+
+<p style="font-size:8pt; color:#666;">{{ mentions_legales }}</p>
+
+<div class="bottom">
+  {{ emetteur.name }} — {{ emetteur.siren }} — {{ emetteur.tva }} — IBAN {{ emetteur.iban }}
+</div>
+
+</body>
+</html>

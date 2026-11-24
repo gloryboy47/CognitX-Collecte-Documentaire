@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Trebuchet MS', sans-serif; font-size: 10pt; color: #222; line-height: 1.4; }
+  .en-tete { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+  .en-tete .societe { font-size: 12pt; font-weight: bold; }
+  .en-tete .societe span { display: block; font-size: 8pt; font-weight: normal; color: #666; }
+  .en-tete .meta-droite { text-align: right; font-size: 8pt; color: #666; }
+  h1 { text-align: center; font-size: 14pt; text-transform: uppercase; letter-spacing: 2px; margin: 15px 0; padding: 8px; border: 2px solid {{ entreprise.logo_color }}; color: {{ entreprise.logo_color }}; }
+  .projet-info { text-align: center; font-size: 10pt; color: #555; margin-bottom: 15px; }
+  .bloc { margin: 12px 0; }
+  .bloc h2 { font-size: 11pt; color: #000; margin: 0 0 6px; padding: 4px 8px; background: linear-gradient(to right, {{ entreprise.logo_color }}, transparent); color: white; }
+  .bloc-contenu { padding: 5px 10px; }
+  table.participants { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 5px 0; }
+  table.participants th { border-bottom: 2px solid {{ entreprise.logo_color }}; padding: 4px 8px; text-align: left; font-size: 8pt; text-transform: uppercase; }
+  table.participants td { padding: 4px 8px; border-bottom: 1px solid #eee; }
+  .alerte { background: #fff3cd; border: 1px solid #ffc107; padding: 8px 12px; margin: 6px 0; font-size: 9.5pt; }
+  .alerte strong { color: #d63384; }
+  table.actions { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  table.actions th { background: #333; color: white; padding: 5px 8px; text-align: left; }
+  table.actions td { padding: 5px 8px; border-bottom: 1px solid #ddd; }
+  .pied { margin-top: 25px; font-size: 7pt; color: #999; text-align: center; border-top: 1px solid #ccc; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="en-tete">
+  <div class="societe">
+    {{ entreprise.name }}
+    <span>{{ entreprise.address }}, {{ entreprise.zip_code }} {{ entreprise.city }}</span>
+    <span>SIREN {{ entreprise.siren }}</span>
+  </div>
+  <div class="meta-droite">
+    Ref : {{ reference }}<br>
+    Date : {{ date_reunion }}<br>
+    Redacteur : {{ redacteur }}
+  </div>
+</div>
+
+<h1>{{ titre_document }}</h1>
+<div class="projet-info">
+  Projet « {{ nom_projet }} » — Domaine : {{ domaine_rd }} — Lieu : {{ lieu }} — Duree : {{ duree }}
+</div>
+
+<div class="bloc">
+  <h2>Participants</h2>
+  <div class="bloc-contenu">
+    <table class="participants">
+      <thead><tr><th>Nom</th><th>Fonction</th><th>Service</th></tr></thead>
+      <tbody>
+        {% for p in participants %}
+        <tr><td>{{ p.full_name }}</td><td>{{ p.job_title }}</td><td>{{ p.department }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2>Ordre du jour</h2>
+  <div class="bloc-contenu">
+    <ol>
+      {% for point in ordre_du_jour %}
+      <li>{{ point }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2>Travaux et resultats</h2>
+  <div class="bloc-contenu">
+    <p><strong>Travaux :</strong> {{ travaux_realises }}</p>
+    <p><strong>Resultats :</strong> {{ resultats }}</p>
+  </div>
+</div>
+
+{% if verrous %}
+<div class="bloc">
+  <h2>Verrous techniques identifies</h2>
+  <div class="bloc-contenu">
+    {% for verrou in verrous %}
+    <div class="alerte">
+      <strong>{{ verrou.titre }}</strong> — {{ verrou.description }}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="bloc">
+  <h2>Plan d'action</h2>
+  <div class="bloc-contenu">
+    <table class="actions">
+      <thead><tr><th>Action</th><th>Responsable</th><th>Echeance</th></tr></thead>
+      <tbody>
+        {% for action in prochaines_etapes %}
+        <tr><td>{{ action.description }}</td><td>{{ action.responsable }}</td><td>{{ action.echeance }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pied">
+  {{ entreprise.name }} — Projet {{ nom_projet }} — {{ reference }} — Document interne et confidentiel
+</div>
+
+</body>
+</html>

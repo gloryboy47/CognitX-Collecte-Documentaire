@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Secrets et environnement local
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Donnees fictives : versionnees (cahier des charges p.4 et p.12)
+# On inclut raw, processed et artifacts car le corpus est fictif et petit (~60 Mo)
+data/private/
+
+# Stockage temporaire de degradation (regenerable, ~52 Mo)
+data/interim/*
+!data/interim/.gitkeep
+
+# Stockage local de dev
+.storage/

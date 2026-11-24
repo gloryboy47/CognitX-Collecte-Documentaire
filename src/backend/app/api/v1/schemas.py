@@ -1,0 +1,110 @@
+from datetime import datetime
+from pydantic import BaseModel, EmailStr
+
+
+# --- Auth ---
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+    full_name: str
+    role: str = "client"
+
+
+class UserOut(BaseModel):
+    id: int
+    email: str
+    full_name: str
+    role: str
+    created_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserOut
+
+
+# --- Cases ---
+
+class CaseCreate(BaseModel):
+    name: str
+    description: str = ""
+
+
+class CaseOut(BaseModel):
+    id: int
+    name: str
+    description: str
+    state: str
+    owner_id: int
+    created_at: datetime
+    updated_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class CaseDetail(CaseOut):
+    documents: list["DocumentOut"] = []
+
+
+# --- Documents ---
+
+class DocumentOut(BaseModel):
+    id: int
+    case_id: int
+    original_filename: str
+    file_size: int | None
+    state: str
+    created_at: datetime
+    updated_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class DocumentDetail(DocumentOut):
+    ocr_text: str | None = None
+    ocr_confidence: float | None = None
+    predictions: list["PredictionOut"] = []
+    decisions: list["DecisionOut"] = []
+
+
+class PredictionOut(BaseModel):
+    id: int
+    predicted_class: str
+    confidence: float
+    probabilities: str | None
+    top_features: str | None
+    model_version: str | None
+    created_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class DecisionCreate(BaseModel):
+    decision: str
+    comment: str = ""
+
+
+class DecisionOut(BaseModel):
+    id: int
+    actor: str
+    decision: str
+    comment: str
+    created_at: datetime
+    model_config = {"from_attributes": True}
+
+
+# --- Notifications ---
+
+class NotificationOut(BaseModel):
+    id: int
+    type: str
+    title: str
+    message: str
+    is_read: bool
+    created_at: datetime
+    model_config = {"from_attributes": True}
