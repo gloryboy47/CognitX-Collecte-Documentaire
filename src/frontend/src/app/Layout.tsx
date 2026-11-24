@@ -1,11 +1,13 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/shared/hooks/useAuth";
+import { useTheme } from "@/shared/hooks/useTheme";
 import { api } from "@/shared/api/client";
 import styles from "./Layout.module.css";
 
 export function Layout() {
   const { user, logout } = useAuth();
+  const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const { data: notifData } = useQuery<{ count: number }>({
@@ -32,6 +34,9 @@ export function Layout() {
               <span className={styles.notifBadge}>{notifData.count}</span>
             )}
           </Link>
+          <button onClick={toggleTheme} className={styles.themeBtn} title="Changer le theme">
+            {theme === "light" ? "Sombre" : "Clair"}
+          </button>
           <span className={styles.user}>
             {user?.full_name} ({user?.role})
           </span>

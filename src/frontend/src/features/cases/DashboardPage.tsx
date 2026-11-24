@@ -22,6 +22,8 @@ export function DashboardPage() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [search, setSearch] = useState("");
+  const [stateFilter, setStateFilter] = useState("all");
 
   const { data: cases = [], isLoading } = useQuery<Case[]>({
     queryKey: ["cases"],
@@ -81,6 +83,26 @@ export function DashboardPage() {
 
       <StatsPanel />
 
+      <div className={styles.filters}>
+        <input
+          className={styles.searchInput}
+          placeholder="Rechercher un dossier..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <select
+          className={styles.filterSelect}
+          value={stateFilter}
+          onChange={(e) => setStateFilter(e.target.value)}
+        >
+          <option value="all">Tous les etats</option>
+          <option value="INCOMPLET">Incomplet</option>
+          <option value="EN_COURS">En cours</option>
+          <option value="A_VALIDER">A valider</option>
+          <option value="VALIDE">Valide</option>
+        </select>
+      </div>
+
       {isLoading && <p className={styles.muted}>Chargement...</p>}
 
       {!isLoading && cases.length === 0 && (
@@ -88,7 +110,14 @@ export function DashboardPage() {
       )}
 
       <div className={styles.grid}>
-        {cases.map((c) => (
+        {cases
+          .filter((c) => {
+            const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
+              c.description.toLowerCase().includes(search.toLowerCase());
+            const matchState = stateFilter === "all" || c.state === stateFilter;
+            return matchSearch && matchState;
+          })
+          .map((c) => (
           <Link to={`/cases/${c.id}`} key={c.id} className={styles.card}>
             <div className={styles.cardHeader}>
               <span className={styles.ref}>#{c.id}</span>

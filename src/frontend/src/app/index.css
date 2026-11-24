@@ -24,6 +24,20 @@
   background: var(--color-bg);
 }
 
+:root[data-theme="dark"] {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 body {
   min-height: 100vh;
 }
@@ -40,4 +54,6 @@ button {
 
 input, select, textarea {
   font: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
 }
