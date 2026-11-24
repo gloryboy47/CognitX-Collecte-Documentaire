@@ -26,11 +26,12 @@ export function Layout() {
           CognitX
         </Link>
         <nav className={styles.nav}>
-          {notifData && notifData.count > 0 && (
-            <span className={styles.notifBadge} title="Notifications non lues">
-              {notifData.count}
-            </span>
-          )}
+          <Link to="/notifications" className={styles.notifLink} title="Notifications">
+            Notifications
+            {notifData && notifData.count > 0 && (
+              <span className={styles.notifBadge}>{notifData.count}</span>
+            )}
+          </Link>
           <span className={styles.user}>
             {user?.full_name} ({user?.role})
           </span>

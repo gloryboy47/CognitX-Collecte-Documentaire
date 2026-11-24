@@ -6,6 +6,7 @@ import { RegisterPage } from "@/features/auth/RegisterPage";
 import { DashboardPage } from "@/features/cases/DashboardPage";
 import { CaseDetailPage } from "@/features/cases/CaseDetailPage";
 import { ReviewPage } from "@/features/review/ReviewPage";
+import { NotificationsPage } from "@/features/notifications/NotificationsPage";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
@@ -37,6 +38,7 @@ export function App() {
         <Route index element={<DashboardPage />} />
         <Route path="cases/:caseId" element={<CaseDetailPage />} />
         <Route path="documents/:docId/review" element={<ReviewPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
       </Route>
     </Routes>
   );

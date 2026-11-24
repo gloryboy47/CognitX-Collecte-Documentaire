@@ -66,11 +66,29 @@ class DocumentOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ExtractedFieldOut(BaseModel):
+    id: int
+    field_name: str
+    field_value: str | None
+    source: str
+    model_config = {"from_attributes": True}
+
+
+class ValidationCheckOut(BaseModel):
+    id: int
+    rule_name: str
+    passed: bool
+    message: str | None
+    model_config = {"from_attributes": True}
+
+
 class DocumentDetail(DocumentOut):
     ocr_text: str | None = None
     ocr_confidence: float | None = None
     predictions: list["PredictionOut"] = []
     decisions: list["DecisionOut"] = []
+    extracted_fields: list["ExtractedFieldOut"] = []
+    validation_checks: list["ValidationCheckOut"] = []
 
 
 class PredictionOut(BaseModel):

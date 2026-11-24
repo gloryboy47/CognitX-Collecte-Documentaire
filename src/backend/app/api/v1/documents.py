@@ -9,7 +9,7 @@ from app.db.base import get_db
 from app.db.models import Document, DocumentState, Case, User, Decision, DecisionActor
 from app.core.deps import get_current_user, require_consultant
 from app.core.config import STORAGE_PATH
-from app.api.v1.schemas import DocumentOut, DocumentDetail, DecisionCreate, DecisionOut
+from app.api.v1.schemas import DocumentOut, DocumentDetail, DecisionCreate, DecisionOut, ExtractedFieldOut, ValidationCheckOut
 from app.pipeline.process import run_pipeline
 from app.modules.notifications.notifier import notify_case_complete
 
@@ -87,6 +87,8 @@ def get_document(doc_id: int, user: User = Depends(get_current_user), db: Sessio
     if doc.ocr_result:
         result.ocr_text = doc.ocr_result.text
         result.ocr_confidence = doc.ocr_result.confidence
+    result.extracted_fields = [ExtractedFieldOut.model_validate(f) for f in doc.extracted_fields]
+    result.validation_checks = [ValidationCheckOut.model_validate(c) for c in doc.validation_checks]
     return result
 
 

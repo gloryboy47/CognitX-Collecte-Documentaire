@@ -24,6 +24,20 @@ interface Decision {
   created_at: string;
 }
 
+interface ExtractedField {
+  id: number;
+  field_name: string;
+  field_value: string | null;
+  source: string;
+}
+
+interface ValidationCheck {
+  id: number;
+  rule_name: string;
+  passed: boolean;
+  message: string | null;
+}
+
 interface DocumentDetail {
   id: number;
   case_id: number;
@@ -34,6 +48,8 @@ interface DocumentDetail {
   ocr_confidence: number | null;
   predictions: Prediction[];
   decisions: Decision[];
+  extracted_fields: ExtractedField[];
+  validation_checks: ValidationCheck[];
 }
 
 const CLASS_LABELS: Record<string, string> = {
@@ -42,6 +58,24 @@ const CLASS_LABELS: Record<string, string> = {
   contrat: "Contrat",
   compte_rendu_rd: "Compte-rendu R&D",
   autre: "Autre",
+};
+
+const FIELD_LABELS: Record<string, string> = {
+  numero_facture: "N° facture",
+  montant_ht: "Montant HT",
+  montant_ttc: "Montant TTC",
+  date_facture: "Date facture",
+  tva: "TVA (%)",
+  salaire_brut: "Salaire brut",
+  salaire_net: "Salaire net",
+  periode: "Periode",
+  employeur: "Employeur",
+  type_contrat: "Type contrat",
+  date_debut: "Date debut",
+  duree: "Duree",
+  date_reunion: "Date reunion",
+  projet: "Projet",
+  participants: "Participants",
 };
 
 export function ReviewPage() {
@@ -145,6 +179,36 @@ export function ReviewPage() {
                   ))}
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {doc.extracted_fields && doc.extracted_fields.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Champs extraits</h2>
+          <div className={styles.card}>
+            {doc.extracted_fields.map((f) => (
+              <div key={f.id} className={styles.row}>
+                <span className={styles.label}>{FIELD_LABELS[f.field_name] ?? f.field_name}</span>
+                <span className={styles.value}>{f.field_value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {doc.validation_checks && doc.validation_checks.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Validation metier</h2>
+          <div className={styles.card}>
+            {doc.validation_checks.map((c) => (
+              <div key={c.id} className={styles.checkRow}>
+                <span className={c.passed ? styles.checkPass : styles.checkFail}>
+                  {c.passed ? "✓" : "✗"}
+                </span>
+                <span className={styles.checkMessage}>{c.message}</span>
+              </div>
+            ))}
           </div>
         </section>
       )}

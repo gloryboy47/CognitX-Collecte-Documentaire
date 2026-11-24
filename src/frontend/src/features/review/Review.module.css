@@ -194,3 +194,36 @@
 .muted {
   color: var(--color-text-muted);
 }
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checkRow:last-child {
+  border-bottom: none;
+}
+
+.checkPass {
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.checkFail {
+  color: var(--color-danger);
+  font-weight: 700;
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.checkMessage {
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
