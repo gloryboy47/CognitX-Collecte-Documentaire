@@ -93,11 +93,13 @@ export function DashboardPage() {
           placeholder="Rechercher un dossier..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          aria-label="Rechercher un dossier"
         />
         <select
           className={styles.filterSelect}
           value={stateFilter}
           onChange={(e) => setStateFilter(e.target.value)}
+          aria-label="Filtrer par etat"
         >
           <option value="all">Tous les etats</option>
           <option value="INCOMPLET">Incomplet</option>

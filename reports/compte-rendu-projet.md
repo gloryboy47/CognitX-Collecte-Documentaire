@@ -246,27 +246,41 @@ RandomForest choisi pour ses performances superieures et sa robustesse au change
 
 ## 7. Brique 4 — Frontend React (`src/frontend/`)
 
-### 7.1 Ecrans livres (3 ecrans du cahier des charges)
+### 7.1 Ecrans livres (5 ecrans)
 
 **Ecran 1 — Dropzone client** (`CaseDetailPage` + `UploadZone`)
-- Glisser-deposer multi-fichiers
+- Glisser-deposer multi-fichiers avec barre de progression
 - Accepte PDF, PNG, JPEG, TIFF (max 20 Mo)
-- Retour immediat par fichier (succes/echec)
+- Toast notification succes/echec par upload
+- Export CSV des decisions du dossier
 
 **Ecran 2 — Tableau de statut** (`DashboardPage` + `CaseDetailPage`)
 - Liste des dossiers avec badges de statut (Incomplet, En cours, Valide)
-- Creation de dossier (clients uniquement)
+- **Recherche** par nom/description + **filtre par etat**
+- Creation de dossier (clients uniquement) avec toast de confirmation
 - Tableau des documents par dossier : fichier, taille, statut, action
+- **Loading skeletons** (animation shimmer) pendant le chargement
 - Rafraichissement automatique toutes les 5 secondes (polling)
+- **Dashboard metriques** (StatsPanel) : documents traites, confiance moyenne, distribution par classe
 
 **Ecran 3 — Revue consultant** (`ReviewPage`)
 - Classe predite + score de confiance
 - Barres de probabilites par classe
 - Mots-cles influents (explication IA)
+- **Champs extraits** (numero facture, montants, dates, etc.)
+- **Validation metier** : checks pass/fail avec indicateurs visuels
 - Texte OCR extrait (avec confiance OCR)
 - Historique des decisions (IA + consultant)
-- Boutons Confirmer / Rejeter avec commentaire optionnel
+- Boutons Confirmer / Rejeter avec commentaire + toast de confirmation
 - Mention "L'IA propose, l'expert decide"
+
+**Ecran 4 — Notifications** (`NotificationsPage`)
+- Liste des notifications avec indicateur lu/non lu
+- Marquer comme lu individuellement ou tout d'un coup
+- Badge compteur dans le header avec polling 10s
+
+**Ecran 5 — Page 404** (`NotFoundPage`)
+- Page d'erreur avec lien retour au dashboard
 
 ### 7.2 Authentification
 
@@ -276,7 +290,18 @@ RandomForest choisi pour ses performances superieures et sa robustesse au change
 - Deconnexion avec nettoyage session
 - Header avec nom + role de l'utilisateur
 
-### 7.3 Stack technique
+### 7.3 UX / Accessibilite
+
+- **Dark mode** complet avec toggle dans le header (persistence localStorage)
+- **Toast notifications** globales (success/error/info) avec animation slide-in
+- **Loading skeletons** shimmer pour dashboard (cards) et case detail (table)
+- **Barre de progression** upload multi-fichiers
+- **Responsive mobile** : header, grille, table avec scroll horizontal, filtres en colonne
+- **Focus visible** (`outline` 2px) sur tous les elements interactifs
+- **aria-labels** sur les boutons et champs de formulaire
+- **sr-only** class pour texte accessible aux lecteurs d'ecran
+
+### 7.4 Stack technique
 
 | Technologie | Version | Usage |
 |------------|---------|-------|
@@ -384,8 +409,8 @@ Collecte-Documents-Intelligente/
 │       ├── vite.config.ts
 │       └── src/
 │           ├── app/ (App, Layout, CSS)
-│           ├── features/ (auth, cases, documents, review)
-│           └── shared/ (api, hooks, ui)
+│           ├── features/ (auth, cases, documents, review, notifications, errors, stats)
+│           └── shared/ (api, hooks/useAuth+useTheme, ui/StatusBadge+Toast+Skeleton)
 ├── .github/workflows/ci.yml           # CI GitHub Actions
 └── .venv/                             # Environnement Python
 ```
@@ -459,6 +484,16 @@ PYTHONPATH=src/ml/src .venv/bin/python -W ignore src/ml/src/docintel_ml/training
 | ~~Notifications consultant~~ | ~~Alertes automatiques~~ | **FAIT** |
 | Mode batch (N documents d'un coup) | Usage reel Leyton | Moyen |
 | ~~Dashboard metriques ML dans le frontend~~ | ~~Maturite IA~~ | **FAIT** |
+| ~~Dark mode~~ | ~~UX moderne~~ | **FAIT** |
+| ~~Recherche + filtre dossiers~~ | ~~Productivite~~ | **FAIT** |
+| ~~Toast notifications~~ | ~~Feedback utilisateur~~ | **FAIT** |
+| ~~Loading skeletons~~ | ~~UX percue~~ | **FAIT** |
+| ~~Responsive mobile~~ | ~~Accessibilite mobile~~ | **FAIT** |
+| ~~Progress bar upload~~ | ~~UX upload~~ | **FAIT** |
+| ~~Page 404~~ | ~~Robustesse~~ | **FAIT** |
+| ~~Champs extraits + validation dans ReviewPage~~ | ~~Transparence IA~~ | **FAIT** |
+| ~~Page Notifications~~ | ~~Workflow consultant~~ | **FAIT** |
+| ~~Accessibilite (aria, focus)~~ | ~~Conformite~~ | **FAIT** |
 | CamemBERT (si GPU disponible) | Meilleur modele possible | Eleve |
 | ~~CI/CD GitHub Actions~~ | ~~Professionnalisme~~ | **FAIT** |
 

@@ -136,3 +136,31 @@
   font-size: 0.8125rem;
   color: var(--color-text-muted);
 }
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filterSelect {
+    min-width: 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    flex-direction: column;
+  }
+
+  .input {
+    min-width: 0;
+  }
+}

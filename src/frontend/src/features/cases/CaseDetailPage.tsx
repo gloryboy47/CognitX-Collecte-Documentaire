@@ -85,6 +85,7 @@ export function CaseDetailPage() {
       {caseData.documents.length === 0 ? (
         <p className={styles.muted}>Aucun document depose.</p>
       ) : (
+        <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -140,6 +141,7 @@ export function CaseDetailPage() {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

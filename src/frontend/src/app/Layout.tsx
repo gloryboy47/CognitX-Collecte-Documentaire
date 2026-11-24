@@ -28,19 +28,19 @@ export function Layout() {
           CognitX
         </Link>
         <nav className={styles.nav}>
-          <Link to="/notifications" className={styles.notifLink} title="Notifications">
+          <Link to="/notifications" className={styles.notifLink} aria-label="Notifications">
             Notifications
             {notifData && notifData.count > 0 && (
               <span className={styles.notifBadge}>{notifData.count}</span>
             )}
           </Link>
-          <button onClick={toggleTheme} className={styles.themeBtn} title="Changer le theme">
+          <button onClick={toggleTheme} className={styles.themeBtn} aria-label="Changer le theme">
             {theme === "light" ? "Sombre" : "Clair"}
           </button>
           <span className={styles.user}>
             {user?.full_name} ({user?.role})
           </span>
-          <button onClick={handleLogout} className={styles.logoutBtn}>
+          <button onClick={handleLogout} className={styles.logoutBtn} aria-label="Se deconnecter">
             Deconnexion
           </button>
         </nav>
