@@ -133,12 +133,38 @@ upload(file) → sauvegarde disque + DB
   └→ run_pipeline(document_id) en arriere-plan :
        1. OCR (PyMuPDF text extraction, fallback Tesseract)
        2. Classification ML (RandomForest predict_proba)
-       3. Decision IA automatique :
+       3. Extraction de champs metier (regex par type de document)
+       4. Validation metier (regles de coherence)
+       5. Decision IA automatique :
           - confiance >= 80% → PROPOSE_CONFORME
           - confiance < 80%  → A_REVOIR
 ```
 
-### 5.4 Securite
+### 5.4 Extraction de champs (`modules/extraction/`)
+
+Regles regex par type de document :
+- **Facture** : numero, montant HT/TTC, date, TVA
+- **Fiche de paie** : salaire brut/net, periode, employeur
+- **Contrat** : type, date debut, duree
+- **Compte rendu R&D** : date reunion, projet, participants
+
+### 5.5 Validation metier (`modules/validation/`)
+
+| Regle | Type | Description |
+|-------|------|-------------|
+| texte_minimum | Commun | Texte OCR > 50 caracteres |
+| qualite_ocr | Commun | Ratio alphabetique > 30% |
+| montant_present | Facture | Montant HT ou TTC detecte |
+| numero_facture | Facture | Numero de facture present |
+| mention_tva | Facture | TVA mentionnee |
+| net_a_payer | Fiche de paie | Net a payer detecte |
+| salaire_brut | Fiche de paie | Salaire brut detecte |
+| mention_signature | Contrat | Clause de signature presente |
+| parties_identifiees | Contrat | Parties du contrat identifiees |
+| mention_rd | CR R&D | Reference R&D detectee |
+| date_reunion | CR R&D | Date de reunion presente |
+
+### 5.6 Securite
 
 - Authentification JWT (HS256, expiration 12h)
 - Hachage bcrypt des mots de passe
@@ -342,8 +368,9 @@ Collecte-Documents-Intelligente/
 │   │   ├── core/ (config, security, deps)
 │   │   ├── db/ (base, models)
 │   │   ├── api/v1/ (auth, cases, documents, schemas)
-│   │   ├── modules/ (ocr, classification)
-│   │   └── pipeline/ (process)
+│   │   ├── modules/ (ocr, classification, extraction, validation)
+│   │   ├── pipeline/ (process)
+│   │   └── tests/ (unit + integration)
 │   ├── ml/                            # Package docintel-ml
 │   │   ├── artifacts/current/ (model.joblib, metadata.json)
 │   │   └── src/docintel_ml/
@@ -351,6 +378,7 @@ Collecte-Documents-Intelligente/
 │   │       ├── training/ (train, compare)
 │   │       ├── evaluation/evaluate.py
 │   │       └── inference/predictor.py
+│   │   └── tests/ (test_features, test_evaluation, test_predictor)
 │   └── frontend/                      # SPA React
 │       ├── index.html
 │       ├── vite.config.ts
@@ -358,6 +386,7 @@ Collecte-Documents-Intelligente/
 │           ├── app/ (App, Layout, CSS)
 │           ├── features/ (auth, cases, documents, review)
 │           └── shared/ (api, hooks, ui)
+├── .github/workflows/ci.yml           # CI GitHub Actions
 └── .venv/                             # Environnement Python
 ```
 
@@ -390,18 +419,48 @@ PYTHONPATH=src/ml/src .venv/bin/python -W ignore src/ml/src/docintel_ml/training
 
 ---
 
-## 13. Ameliorations Possibles
+## 13. Tests Automatises
+
+### 13.1 Tests ML (`src/ml/tests/`)
+
+| Fichier | Tests | Couverture |
+|---------|-------|-----------|
+| `test_features.py` | SimpleFeatures, KeywordFeatures, TextNormalizer, build_feature_union | Features d'entree du modele |
+| `test_evaluation.py` | Metriques, matrice de confusion, format de sortie | Module d'evaluation |
+| `test_predictor.py` | Prediction avec/sans modele, fallback, reload | Module d'inference |
+
+### 13.2 Tests Backend (`src/backend/tests/`)
+
+| Fichier | Tests | Couverture |
+|---------|-------|-----------|
+| `unit/test_security.py` | Hash/verify password, create/decode JWT | Auth et securite |
+| `unit/test_models.py` | Enums (DocumentState, CaseState, Role, DecisionActor) | Modele de donnees |
+| `unit/test_pipeline.py` | Logique de decision IA (seuils, cas limites) | Decision automatique |
+| `integration/test_api_auth.py` | Register, login, doublons, mauvais mot de passe | API auth complete |
+| `integration/test_api_cases.py` | CRUD dossiers, isolation client/consultant, 403 | API cases complete |
+
+### 13.3 CI/CD (`.github/workflows/ci.yml`)
+
+4 jobs paralleles sur chaque push/PR :
+1. **Tests ML** : pytest sur docintel-ml
+2. **Tests Backend** : pytest sur le backend (avec base in-memory)
+3. **Lint Backend** : ruff check
+4. **Lint Frontend** : TypeScript `tsc --noEmit`
+
+---
+
+## 14. Ameliorations Possibles
 
 | Amelioration | Impact | Effort |
 |-------------|--------|--------|
-| Tests unitaires et integration | Qualite logicielle | Moyen |
+| ~~Tests unitaires et integration~~ | ~~Qualite logicielle~~ | **FAIT** |
 | Docker Compose (one-click deploy) | Demo jour J | Moyen |
 | Export decisions en CSV/PDF | Livrable client | Faible |
 | Notifications consultant (APScheduler) | Alertes automatiques | Moyen |
 | Mode batch (N documents d'un coup) | Usage reel Leyton | Moyen |
 | Dashboard metriques ML dans le frontend | Maturite IA | Moyen |
 | CamemBERT (si GPU disponible) | Meilleur modele possible | Eleve |
-| CI/CD GitHub Actions | Professionnalisme | Faible |
+| ~~CI/CD GitHub Actions~~ | ~~Professionnalisme~~ | **FAIT** |
 
 ---
 

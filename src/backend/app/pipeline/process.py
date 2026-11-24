@@ -6,9 +6,12 @@ Execute en tache de fond apres l'upload d'un document.
 from app.db.base import SessionLocal
 from app.db.models import (
     Document, DocumentState, OcrResult, Prediction, Decision, DecisionActor,
+    ExtractedField, ValidationCheck,
 )
 from app.modules.ocr.engine import extract_text
 from app.modules.classification.classifier import classify
+from app.modules.extraction.extractor import extract_fields
+from app.modules.validation.validator import validate_document
 from app.core.config import settings
 
 
@@ -61,7 +64,30 @@ def run_pipeline(document_id: int) -> None:
         db.add(pred)
         db.commit()
 
-        # --- Etape 3 : Decision IA ---
+        # --- Etape 3 : Extraction de champs ---
+        fields = extract_fields(text, result["predicted_class"])
+        for f in fields:
+            db.add(ExtractedField(
+                document_id=doc.id,
+                field_name=f.field_name,
+                field_value=f.field_value,
+                source=f.source,
+            ))
+        db.commit()
+
+        # --- Etape 4 : Validation metier ---
+        fields_dict = {f.field_name: f.field_value for f in fields}
+        checks = validate_document(text, result["predicted_class"], fields_dict)
+        for c in checks:
+            db.add(ValidationCheck(
+                document_id=doc.id,
+                rule_name=c.rule_name,
+                passed=c.passed,
+                message=c.message,
+            ))
+        db.commit()
+
+        # --- Etape 5 : Decision IA ---
         min_conf = settings.CLASSIFICATION_MIN_CONFIDENCE
 
         if result["confidence"] >= min_conf:
