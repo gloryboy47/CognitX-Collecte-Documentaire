@@ -26,7 +26,9 @@ export function DashboardPage() {
   const [description, setDescription] = useState("");
   const [search, setSearch] = useState("");
   const [stateFilter, setStateFilter] = useState("all");
+  const [page, setPage] = useState(0);
   const { toast } = useToast();
+  const PAGE_SIZE = 9;
 
   const { data: cases = [], isLoading } = useQuery<Case[]>({
     queryKey: ["cases"],
@@ -119,27 +121,56 @@ export function DashboardPage() {
         <p className={styles.muted}>Aucun dossier pour le moment.</p>
       )}
 
-      <div className={styles.grid}>
-        {cases
-          .filter((c) => {
-            const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
-              c.description.toLowerCase().includes(search.toLowerCase());
-            const matchState = stateFilter === "all" || c.state === stateFilter;
-            return matchSearch && matchState;
-          })
-          .map((c) => (
-          <Link to={`/cases/${c.id}`} key={c.id} className={styles.card}>
-            <div className={styles.cardHeader}>
-              <span className={styles.ref}>#{c.id}</span>
-              <StatusBadge status={c.state} />
+      {(() => {
+        const filtered = cases.filter((c) => {
+          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
+            c.description.toLowerCase().includes(search.toLowerCase());
+          const matchState = stateFilter === "all" || c.state === stateFilter;
+          return matchSearch && matchState;
+        });
+        const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+        const paginated = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+
+        return (
+          <>
+            <div className={styles.grid}>
+              {paginated.map((c) => (
+                <Link to={`/cases/${c.id}`} key={c.id} className={styles.card}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.ref}>#{c.id}</span>
+                    <StatusBadge status={c.state} />
+                  </div>
+                  <h3 className={styles.company}>{c.name}</h3>
+                  {c.description && (
+                    <span className={styles.year}>{c.description}</span>
+                  )}
+                </Link>
+              ))}
             </div>
-            <h3 className={styles.company}>{c.name}</h3>
-            {c.description && (
-              <span className={styles.year}>{c.description}</span>
+            {totalPages > 1 && (
+              <div className={styles.pagination}>
+                <button
+                  className={styles.pageBtn}
+                  disabled={page === 0}
+                  onClick={() => setPage((p) => p - 1)}
+                >
+                  Precedent
+                </button>
+                <span className={styles.pageInfo}>
+                  {page + 1} / {totalPages}
+                </span>
+                <button
+                  className={styles.pageBtn}
+                  disabled={page >= totalPages - 1}
+                  onClick={() => setPage((p) => p + 1)}
+                >
+                  Suivant
+                </button>
+              </div>
             )}
-          </Link>
-        ))}
-      </div>
+          </>
+        );
+      })()}
     </div>
   );
 }

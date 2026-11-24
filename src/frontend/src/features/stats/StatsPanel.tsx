@@ -33,6 +33,8 @@ export function StatsPanel() {
   if (!stats || stats.total_documents === 0) return null;
 
   const pctConfiance = Math.round(stats.confiance_moyenne * 100);
+  const totalDecided = stats.confirmes + stats.rejetes;
+  const tauxConformite = totalDecided > 0 ? Math.round((stats.confirmes / totalDecided) * 100) : 0;
 
   return (
     <div className={styles.panel}>
@@ -52,8 +54,27 @@ export function StatsPanel() {
           <span className={styles.tileLabel}>Confiance moy.</span>
         </div>
         <div className={styles.tile}>
+          <span className={styles.tileValue}>{stats.haute_confiance}</span>
+          <span className={styles.tileLabel}>Haute conf.</span>
+        </div>
+      </div>
+
+      <div className={styles.tiles}>
+        <div className={styles.tile}>
           <span className={styles.tileValue}>{stats.en_attente}</span>
           <span className={styles.tileLabel}>En attente</span>
+        </div>
+        <div className={styles.tile}>
+          <span className={styles.tileValue}>{stats.confirmes}</span>
+          <span className={styles.tileLabel}>Confirmes</span>
+        </div>
+        <div className={styles.tile}>
+          <span className={styles.tileValue}>{stats.rejetes}</span>
+          <span className={styles.tileLabel}>Rejetes</span>
+        </div>
+        <div className={styles.tile}>
+          <span className={styles.tileValue}>{totalDecided > 0 ? `${tauxConformite}%` : "-"}</span>
+          <span className={styles.tileLabel}>Taux conformite</span>
         </div>
       </div>
 
@@ -83,20 +104,25 @@ export function StatsPanel() {
         </div>
       )}
 
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Decisions</h3>
-        <div className={styles.decisions}>
-          <span className={styles.decisionConfirme}>
-            {stats.confirmes} confirmes
-          </span>
-          <span className={styles.decisionRejete}>
-            {stats.rejetes} rejetes
-          </span>
-          <span className={styles.decisionAttente}>
-            {stats.en_attente} en attente
-          </span>
+      {totalDecided > 0 && (
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Taux de conformite</h3>
+          <div className={styles.barTrack}>
+            <div
+              className={styles.barFillSuccess}
+              style={{ width: `${tauxConformite}%` }}
+            />
+          </div>
+          <div className={styles.decisions}>
+            <span className={styles.decisionConfirme}>
+              {stats.confirmes} confirmes ({tauxConformite}%)
+            </span>
+            <span className={styles.decisionRejete}>
+              {stats.rejetes} rejetes ({100 - tauxConformite}%)
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
