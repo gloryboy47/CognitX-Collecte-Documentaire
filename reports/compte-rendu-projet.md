@@ -454,11 +454,11 @@ PYTHONPATH=src/ml/src .venv/bin/python -W ignore src/ml/src/docintel_ml/training
 | Amelioration | Impact | Effort |
 |-------------|--------|--------|
 | ~~Tests unitaires et integration~~ | ~~Qualite logicielle~~ | **FAIT** |
-| Docker Compose (one-click deploy) | Demo jour J | Moyen |
-| Export decisions en CSV/PDF | Livrable client | Faible |
-| Notifications consultant (APScheduler) | Alertes automatiques | Moyen |
+| ~~Docker Compose (one-click deploy)~~ | ~~Demo jour J~~ | **FAIT** |
+| ~~Export decisions en CSV~~ | ~~Livrable client~~ | **FAIT** |
+| ~~Notifications consultant~~ | ~~Alertes automatiques~~ | **FAIT** |
 | Mode batch (N documents d'un coup) | Usage reel Leyton | Moyen |
-| Dashboard metriques ML dans le frontend | Maturite IA | Moyen |
+| ~~Dashboard metriques ML dans le frontend~~ | ~~Maturite IA~~ | **FAIT** |
 | CamemBERT (si GPU disponible) | Meilleur modele possible | Eleve |
 | ~~CI/CD GitHub Actions~~ | ~~Professionnalisme~~ | **FAIT** |
 

@@ -81,3 +81,19 @@
   color: var(--color-text-muted);
   font-size: 0.875rem;
 }
+
+.exportBtn {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+.exportBtn:hover {
+  background: var(--color-primary);
+  color: white;
+}

@@ -11,6 +11,7 @@ from app.core.deps import get_current_user, require_consultant
 from app.core.config import STORAGE_PATH
 from app.api.v1.schemas import DocumentOut, DocumentDetail, DecisionCreate, DecisionOut
 from app.pipeline.process import run_pipeline
+from app.modules.notifications.notifier import notify_case_complete
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -119,4 +120,9 @@ def decide(
 
     db.commit()
     db.refresh(decision)
+
+    case = db.get(Case, doc.case_id)
+    if case:
+        notify_case_complete(db, case)
+
     return decision

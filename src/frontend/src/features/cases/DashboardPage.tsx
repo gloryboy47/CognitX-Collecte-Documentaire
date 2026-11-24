@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
+import { StatsPanel } from "@/features/stats/StatsPanel";
 import styles from "./Dashboard.module.css";
 
 interface Case {
@@ -77,6 +78,8 @@ export function DashboardPage() {
           </button>
         </form>
       )}
+
+      <StatsPanel />
 
       {isLoading && <p className={styles.muted}>Chargement...</p>}
 

@@ -54,7 +54,18 @@ export function CaseDetailPage() {
             <p className={styles.desc}>{caseData.description}</p>
           )}
         </div>
-        <StatusBadge status={caseData.state} />
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <StatusBadge status={caseData.state} />
+          {caseData.documents.length > 0 && (
+            <a
+              href={`/api/v1/export/cases/${caseId}/csv`}
+              className={styles.exportBtn}
+              download
+            >
+              Export CSV
+            </a>
+          )}
+        </div>
       </div>
 
       {canUpload && (

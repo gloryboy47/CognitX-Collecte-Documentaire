@@ -1,10 +1,18 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/shared/hooks/useAuth";
+import { api } from "@/shared/api/client";
 import styles from "./Layout.module.css";
 
 export function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const { data: notifData } = useQuery<{ count: number }>({
+    queryKey: ["notif-count"],
+    queryFn: () => api.get("/notifications/unread/count"),
+    refetchInterval: 10000,
+  });
 
   const handleLogout = () => {
     logout();
@@ -18,6 +26,11 @@ export function Layout() {
           CognitX
         </Link>
         <nav className={styles.nav}>
+          {notifData && notifData.count > 0 && (
+            <span className={styles.notifBadge} title="Notifications non lues">
+              {notifData.count}
+            </span>
+          )}
           <span className={styles.user}>
             {user?.full_name} ({user?.role})
           </span>

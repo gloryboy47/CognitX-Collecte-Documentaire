@@ -9,6 +9,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    proxy: { "/api": "http://localhost:8000" },
+    host: true,
+    proxy: { "/api": process.env.API_URL || "http://localhost:8000" },
   },
 });

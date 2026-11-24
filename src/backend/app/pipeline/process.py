@@ -12,6 +12,7 @@ from app.modules.ocr.engine import extract_text
 from app.modules.classification.classifier import classify
 from app.modules.extraction.extractor import extract_fields
 from app.modules.validation.validator import validate_document
+from app.modules.notifications.notifier import notify_document_ready
 from app.core.config import settings
 
 
@@ -112,6 +113,9 @@ def run_pipeline(document_id: int) -> None:
         )
         db.add(decision)
         db.commit()
+
+        # --- Etape 6 : Notification consultants ---
+        notify_document_ready(db, doc)
 
     except Exception as e:
         db.rollback()

@@ -45,6 +45,20 @@
   background: var(--color-bg);
 }
 
+.notifBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  background: var(--color-danger);
+  border-radius: 10px;
+}
+
 .main {
   flex: 1;
   padding: 24px;

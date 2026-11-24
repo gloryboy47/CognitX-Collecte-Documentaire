@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.db.base import Base, engine
 from app.db.models import DocumentType
 from app.db.base import SessionLocal
-from app.api.v1 import auth, cases, documents
+from app.api.v1 import auth, cases, documents, notifications, export, stats
 
 
 @asynccontextmanager
@@ -33,6 +33,9 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(cases.router, prefix="/api/v1")
 app.include_router(documents.router, prefix="/api/v1")
+app.include_router(notifications.router, prefix="/api/v1")
+app.include_router(export.router, prefix="/api/v1")
+app.include_router(stats.router, prefix="/api/v1")
 
 
 @app.get("/health")
