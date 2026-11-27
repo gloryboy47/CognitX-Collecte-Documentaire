@@ -27,7 +27,28 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return JSON.parse(text);
 }
 
+/** Telecharge un fichier protege : un simple lien <a> n'envoie pas le token. */
+async function download(path: string, filename: string): Promise<void> {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${BASE}${path}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new ApiError(res.status, body.detail ?? res.statusText);
+  }
+  const url = URL.createObjectURL(await res.blob());
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 export const api = {
+  download,
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body?: unknown) =>
     request<T>(path, {

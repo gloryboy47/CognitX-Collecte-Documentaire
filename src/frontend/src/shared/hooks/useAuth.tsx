@@ -23,6 +23,7 @@ interface AuthCtx {
     password: string,
     full_name: string,
     role: "client" | "consultant",
+    invite_code?: string,
   ) => Promise<void>;
   logout: () => void;
 }
@@ -79,12 +80,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       password: string,
       full_name: string,
       role: "client" | "consultant",
+      invite_code?: string,
     ) => {
       const data = await api.post<TokenResponse>("/auth/register", {
         email,
         password,
         full_name,
         role,
+        invite_code: invite_code ?? "",
       });
       const u = saveSession(data);
       setToken(data.access_token);

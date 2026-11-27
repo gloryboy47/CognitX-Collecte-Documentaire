@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from app.db.models import Notification, User, Role, Document, Case
+from app.db.models import Notification, User, Role, Document, Case, CaseState
 
 
 def notify_document_ready(db: Session, document: Document) -> None:
@@ -37,20 +37,38 @@ def notify_document_ready(db: Session, document: Document) -> None:
     db.commit()
 
 
-def notify_case_complete(db: Session, case: Case) -> None:
-    """Notifie le proprietaire du dossier que tous les documents sont traites."""
-    all_decided = all(
-        doc.state.value in ("CONFIRME", "REJETE")
-        for doc in case.documents
-    )
-    if not all_decided or not case.documents:
-        return
+def notify_document_rejected(db: Session, case: Case, document: Document, comment: str) -> None:
+    """Informe le client qu'une piece a ete rejetee et pourquoi."""
+    reason = f" Motif : {comment}" if comment.strip() else ""
+    db.add(Notification(
+        user_id=case.owner_id,
+        type="document_rejected",
+        title="Piece a remplacer",
+        message=f"{document.original_filename} ({case.name}) a ete rejete.{reason}",
+    ))
+    db.commit()
 
-    notif = Notification(
+
+def notify_case_complete(db: Session, case: Case) -> None:
+    """Notifie le proprietaire quand toutes les pieces attendues sont validees."""
+    if case.state != CaseState.VALIDE:
+        return
+    marker = f"(dossier #{case.id})"
+    already = (
+        db.query(Notification)
+        .filter(
+            Notification.user_id == case.owner_id,
+            Notification.type == "case_complete",
+            Notification.message.contains(marker),
+        )
+        .first()
+    )
+    if already:
+        return
+    db.add(Notification(
         user_id=case.owner_id,
         type="case_complete",
-        title="Dossier traite",
-        message=f"Tous les documents de '{case.name}' ont ete examines par un consultant.",
-    )
-    db.add(notif)
+        title="Dossier complet",
+        message=f"Toutes les pieces attendues de '{case.name}' {marker} sont validees.",
+    ))
     db.commit()

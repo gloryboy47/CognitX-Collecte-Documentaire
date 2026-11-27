@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
@@ -24,18 +25,35 @@ interface CaseDetail {
   owner_id: number;
   created_at: string;
   documents: Document[];
+  checklist: Requirement[];
+}
+
+interface Requirement {
+  code: string;
+  label: string;
+  status: "FOURNI" | "A_VALIDER" | "A_REVOIR" | "REJETE" | "MANQUANT";
 }
 
 export function CaseDetailPage() {
   const { caseId } = useParams<{ caseId: string }>();
   const { user } = useAuth();
   const qc = useQueryClient();
+  const [exportError, setExportError] = useState("");
 
   const { data: caseData, isLoading } = useQuery<CaseDetail>({
     queryKey: ["case", caseId],
     queryFn: () => api.get(`/cases/${caseId}`),
     refetchInterval: 5000,
   });
+
+  const handleExport = async () => {
+    setExportError("");
+    try {
+      await api.download(`/export/cases/${caseId}/csv`, `dossier_${caseId}.csv`);
+    } catch (e) {
+      setExportError(e instanceof Error ? e.message : "Export impossible");
+    }
+  };
 
   if (isLoading) return <TableSkeleton rows={5} />;
   if (!caseData) return <p className={styles.muted}>Dossier introuvable.</p>;
@@ -58,16 +76,32 @@ export function CaseDetailPage() {
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           <StatusBadge status={caseData.state} />
           {caseData.documents.length > 0 && (
-            <a
-              href={`/api/v1/export/cases/${caseId}/csv`}
+            <button
+              type="button"
               className={styles.exportBtn}
-              download
+              onClick={handleExport}
             >
               Export CSV
-            </a>
+            </button>
           )}
         </div>
       </div>
+
+      {exportError && <p className={styles.errorText}>{exportError}</p>}
+
+      <h2 className={styles.sectionTitle}>
+        Pieces attendues (
+        {caseData.checklist.filter((r) => r.status === "FOURNI").length}/
+        {caseData.checklist.length} validees)
+      </h2>
+      <ul className={styles.checklist}>
+        {caseData.checklist.map((r) => (
+          <li key={r.code} className={styles.checkItem}>
+            <span>{r.label}</span>
+            <StatusBadge status={r.status} />
+          </li>
+        ))}
+      </ul>
 
       {canUpload && (
         <UploadZone

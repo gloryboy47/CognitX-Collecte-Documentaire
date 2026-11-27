@@ -13,6 +13,7 @@ from app.modules.classification.classifier import classify
 from app.modules.extraction.extractor import extract_fields
 from app.modules.validation.validator import validate_document
 from app.modules.notifications.notifier import notify_document_ready
+from app.modules.cases.service import refresh_case_state
 from app.core.config import settings
 
 
@@ -47,6 +48,8 @@ def run_pipeline(document_id: int) -> None:
             )
             db.add(decision)
             db.commit()
+            refresh_case_state(db, doc.case)
+            notify_document_ready(db, doc)
             return
 
         # --- Etape 2 : Classification ---
@@ -115,6 +118,7 @@ def run_pipeline(document_id: int) -> None:
         db.commit()
 
         # --- Etape 6 : Notification consultants ---
+        refresh_case_state(db, doc.case)
         notify_document_ready(db, doc)
 
     except Exception as e:
@@ -131,6 +135,7 @@ def run_pipeline(document_id: int) -> None:
                 )
                 db.add(decision)
                 db.commit()
+                refresh_case_state(db, doc.case)
         except Exception:
             pass
     finally:

@@ -1,4 +1,6 @@
 from datetime import datetime
+from typing import Literal
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -8,7 +10,8 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
     full_name: str
-    role: str = "client"
+    role: Literal["client", "consultant"] = "client"
+    invite_code: str = ""
 
 
 class UserOut(BaseModel):
@@ -49,8 +52,16 @@ class CaseOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class RequirementOut(BaseModel):
+    code: str
+    label: str
+    status: Literal["FOURNI", "A_VALIDER", "A_REVOIR", "REJETE", "MANQUANT"]
+
+
 class CaseDetail(CaseOut):
     documents: list["DocumentOut"] = []
+    # Nomme "checklist" : "requirements" est deja la relation ORM du modele Case
+    checklist: list[RequirementOut] = []
 
 
 # --- Documents ---

@@ -9,6 +9,7 @@ export function RegisterPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState<"client" | "consultant">("client");
+  const [inviteCode, setInviteCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +25,7 @@ export function RegisterPage() {
     setError("");
     setLoading(true);
     try {
-      await register(email, password, fullName, role);
+      await register(email, password, fullName, role, inviteCode);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur d'inscription");
     } finally {
@@ -95,6 +96,19 @@ export function RegisterPage() {
             <option value="consultant">Consultant</option>
           </select>
         </div>
+
+        {role === "consultant" && (
+          <div className={styles.field}>
+            <label className={styles.label}>Code d'invitation consultant</label>
+            <input
+              className={styles.input}
+              type="password"
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
+              required
+            />
+          </div>
+        )}
 
         {error && <p className={styles.error}>{error}</p>}
 

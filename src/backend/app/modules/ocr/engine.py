@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from app.core.config import settings
+
 
 def extract_text(file_path: str) -> tuple[str, float, str]:
     """Retourne (texte, confiance, engine).
@@ -38,6 +40,8 @@ def _ocr_tesseract(file_path: Path) -> tuple[str, float]:
         import pytesseract
         from PIL import Image
 
+        pytesseract.pytesseract.tesseract_cmd = settings.TESSERACT_CMD
+
         if file_path.suffix.lower() == ".pdf":
             import pymupdf
             doc = pymupdf.open(str(file_path))
@@ -51,11 +55,14 @@ def _ocr_tesseract(file_path: Path) -> tuple[str, float]:
             images = [Image.open(file_path)]
 
         texts = []
+        confidences: list[float] = []  # cumulees sur toutes les pages
         for img in images:
-            data = pytesseract.image_to_data(img, lang="fra+eng", output_type=pytesseract.Output.DICT)
-            page_text = " ".join(w for w, c in zip(data["text"], data["conf"]) if int(c) > 0)
+            data = pytesseract.image_to_data(
+                img, lang=settings.OCR_LANGS, output_type=pytesseract.Output.DICT
+            )
+            page_text = " ".join(w for w, c in zip(data["text"], data["conf"]) if float(c) > 0)
             texts.append(page_text)
-            confidences = [int(c) for c in data["conf"] if int(c) > 0]
+            confidences.extend(float(c) for c in data["conf"] if float(c) > 0)
 
         full = "\n".join(texts).strip()
         avg_conf = sum(confidences) / len(confidences) / 100 if confidences else 0.0

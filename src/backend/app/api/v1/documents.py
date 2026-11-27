@@ -11,7 +11,8 @@ from app.core.deps import get_current_user, require_consultant
 from app.core.config import STORAGE_PATH
 from app.api.v1.schemas import DocumentOut, DocumentDetail, DecisionCreate, DecisionOut, ExtractedFieldOut, ValidationCheckOut
 from app.pipeline.process import run_pipeline
-from app.modules.notifications.notifier import notify_case_complete
+from app.modules.notifications.notifier import notify_case_complete, notify_document_rejected
+from app.modules.cases.service import refresh_case_state
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -42,6 +43,20 @@ async def upload_document(
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Fichier trop volumineux (max 20 Mo)")
 
     file_hash = hashlib.sha256(content).hexdigest()
+    duplicate = (
+        db.query(Document)
+        .filter(
+            Document.case_id == case_id,
+            Document.file_hash == file_hash,
+            Document.state != DocumentState.REJETE,
+        )
+        .first()
+    )
+    if duplicate:
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            f"Ce fichier est deja present dans le dossier ({duplicate.original_filename})",
+        )
     stored_name = f"{uuid.uuid4().hex}{ext}"
     case_dir = STORAGE_PATH / str(case_id)
     case_dir.mkdir(parents=True, exist_ok=True)
@@ -58,6 +73,7 @@ async def upload_document(
     db.add(doc)
     db.commit()
     db.refresh(doc)
+    refresh_case_state(db, case)
 
     background_tasks.add_task(run_pipeline, doc.id)
 
@@ -105,6 +121,12 @@ def decide(
     if doc.state.value not in ("PROPOSE_CONFORME", "PROPOSE_REJET", "A_REVOIR"):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Le document n'est pas en attente de decision")
 
+    new_state = {"confirme": DocumentState.CONFIRME, "rejete": DocumentState.REJETE}.get(
+        body.decision.lower()
+    )
+    if new_state is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Decision invalide (confirme ou rejete)")
+
     decision = Decision(
         document_id=doc_id,
         actor=DecisionActor.CONSULTANT,
@@ -113,18 +135,15 @@ def decide(
     )
     db.add(decision)
 
-    if body.decision in ("confirme", "CONFIRME"):
-        doc.state = DocumentState.CONFIRME
-    elif body.decision in ("rejete", "REJETE"):
-        doc.state = DocumentState.REJETE
-    else:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Decision invalide (confirme ou rejete)")
-
+    doc.state = new_state
     db.commit()
     db.refresh(decision)
 
     case = db.get(Case, doc.case_id)
     if case:
+        refresh_case_state(db, case)
+        if new_state == DocumentState.REJETE:
+            notify_document_rejected(db, case, doc, body.comment)
         notify_case_complete(db, case)
 
     return decision

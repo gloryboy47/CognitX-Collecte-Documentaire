@@ -13,16 +13,29 @@ router = APIRouter(prefix="/stats", tags=["stats"])
 
 @router.get("")
 def get_stats(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    total_docs = db.query(Document).count()
-    total_cases = db.query(Case).count()
+    # Un client ne voit que ses propres dossiers ; un consultant voit tout.
+    docs = db.query(Document)
+    cases = db.query(Case)
+    preds_query = db.query(Prediction)
+    if user.role.value != "consultant":
+        docs = docs.join(Case, Document.case_id == Case.id).filter(Case.owner_id == user.id)
+        cases = cases.filter(Case.owner_id == user.id)
+        preds_query = (
+            preds_query.join(Document, Prediction.document_id == Document.id)
+            .join(Case, Document.case_id == Case.id)
+            .filter(Case.owner_id == user.id)
+        )
+
+    total_docs = docs.count()
+    total_cases = cases.count()
 
     state_counts = {}
     for state in DocumentState:
-        count = db.query(Document).filter(Document.state == state).count()
+        count = docs.filter(Document.state == state).count()
         if count > 0:
             state_counts[state.value] = count
 
-    preds = db.query(Prediction).all()
+    preds = preds_query.all()
     class_counts = {}
     confidences = []
     for p in preds:
@@ -33,9 +46,9 @@ def get_stats(user: User = Depends(get_current_user), db: Session = Depends(get_
     high_confidence = sum(1 for c in confidences if c >= 0.80)
     low_confidence = sum(1 for c in confidences if c < 0.80)
 
-    confirmed = db.query(Document).filter(Document.state == DocumentState.CONFIRME).count()
-    rejected = db.query(Document).filter(Document.state == DocumentState.REJETE).count()
-    pending = db.query(Document).filter(
+    confirmed = docs.filter(Document.state == DocumentState.CONFIRME).count()
+    rejected = docs.filter(Document.state == DocumentState.REJETE).count()
+    pending = docs.filter(
         Document.state.in_([
             DocumentState.PROPOSE_CONFORME,
             DocumentState.PROPOSE_REJET,

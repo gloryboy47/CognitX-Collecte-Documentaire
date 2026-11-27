@@ -8,6 +8,7 @@ services:
     environment:
       - JWT_SECRET=change-me-in-production
       - CLASSIFICATION_MIN_CONFIDENCE=0.80
+      - CONSULTANT_INVITE_CODE=${CONSULTANT_INVITE_CODE:-}
 
   frontend:
     image: node:20-alpine

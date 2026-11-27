@@ -18,6 +18,11 @@ class Settings(BaseSettings):
 
     REMINDER_INTERVAL_HOURS: int = 24
 
+    # Inscription consultant : desactivee tant que ce code est vide
+    CONSULTANT_INVITE_CODE: str = ""
+    # Pieces attendues par dossier. Liste HYPOTHETIQUE, a valider avec l'encadrant / Leyton.
+    REQUIRED_DOCUMENT_TYPES: str = "facture,fiche_de_paie,contrat,compte_rendu_rd"
+
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 

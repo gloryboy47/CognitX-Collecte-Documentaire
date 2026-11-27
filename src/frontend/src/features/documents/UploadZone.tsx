@@ -24,20 +24,24 @@ export function UploadZone({ caseId, onUploaded }: Props) {
       setProgress({ current: 0, total: fileArr.length });
       let ok = 0;
       let fail = 0;
+      const reasons: string[] = [];
       for (const file of fileArr) {
         try {
           const form = new FormData();
           form.append("file", file);
           await api.post(`/documents/upload/${caseId}`, form);
           ok++;
-        } catch {
+        } catch (e) {
           fail++;
+          if (e instanceof Error) reasons.push(e.message);
         }
         setProgress({ current: ok + fail, total: fileArr.length });
       }
       setUploading(false);
       if (fail > 0) {
-        setMessage(`${ok} envoye(s), ${fail} echec(s)`);
+        setMessage(
+          [`${ok} envoye(s), ${fail} echec(s)`, ...reasons].join(" - "),
+        );
         toast(`${ok} envoye(s), ${fail} echec(s)`, "error");
       } else {
         setMessage(`${ok} document(s) envoye(s)`);

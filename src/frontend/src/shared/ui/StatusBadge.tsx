@@ -13,6 +13,8 @@ const LABELS: Record<string, string> = {
   EN_COURS: "En cours",
   A_VALIDER: "A valider",
   VALIDE: "Valide",
+  FOURNI: "Fourni",
+  MANQUANT: "Manquant",
 };
 
 const VARIANT: Record<string, string> = {
@@ -28,6 +30,8 @@ const VARIANT: Record<string, string> = {
   EN_COURS: "info",
   A_VALIDER: "warning",
   VALIDE: "success",
+  FOURNI: "success",
+  MANQUANT: "danger",
 };
 
 export function StatusBadge({ status }: { status: string }) {
